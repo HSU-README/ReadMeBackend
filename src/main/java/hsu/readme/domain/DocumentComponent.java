@@ -1,5 +1,6 @@
 package hsu.readme.domain;
 
+import hsu.readme.domain.component.Component;
 import lombok.Getter;
 import lombok.Setter;
 
