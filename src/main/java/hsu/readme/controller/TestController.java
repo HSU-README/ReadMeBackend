@@ -1,4 +1,4 @@
-package hsu.readme;
+package hsu.readme.controller;
 
 import hsu.readme.Repository.MemberRepository;
 import hsu.readme.domain.Member;
