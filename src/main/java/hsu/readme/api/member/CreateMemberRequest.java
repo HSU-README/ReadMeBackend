@@ -1,4 +1,4 @@
-package hsu.readme.api.member.request;
+package hsu.readme.api.member;
 
 import lombok.Data;
 

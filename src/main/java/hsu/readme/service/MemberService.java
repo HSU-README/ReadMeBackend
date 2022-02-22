@@ -1,7 +1,10 @@
 package hsu.readme.service;
 
 import hsu.readme.Repository.MemberRepository;
+import hsu.readme.api.ResponseMessage;
 import hsu.readme.domain.Member;
+import hsu.readme.exception.ApiException;
+import hsu.readme.exception.ExceptionEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,14 +38,14 @@ public class MemberService{
     private void validateDuplicateMemberByEmail(String email) {
         List<Member> findMembersByEmail = memberRepository.findByEmail(email);
         if(!findMembersByEmail.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+            throw new ApiException(ExceptionEnum.DUPLICATE_USER_EMAIL_EXCEPTION);
         }
     }
 
     private void validateDuplicateMemberByName(String name) {
         List<Member> findMembersByName = memberRepository.findByName(name);
         if(!findMembersByName.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 이름입니다.");
+            throw new ApiException(ExceptionEnum.DUPLICATE_USER_NAME_EXCEPTION);
         }
     }
 }

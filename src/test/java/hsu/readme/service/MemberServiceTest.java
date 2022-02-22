@@ -2,6 +2,7 @@ package hsu.readme.service;
 
 import hsu.readme.Repository.MemberRepository;
 import hsu.readme.domain.Member;
+import hsu.readme.exception.ApiException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,7 +42,7 @@ class MemberServiceTest {
 
         //when
         memberService.join(member1);
-        assertThrows(IllegalStateException.class, ()-> memberService.join(member2));
+        assertThrows(ApiException.class, ()-> memberService.join(member2));
 
         //fail("예외가 발생해야 합니다.");
     }
@@ -59,7 +60,7 @@ class MemberServiceTest {
 
         //when
         memberService.join(member1);
-        assertThrows(IllegalStateException.class, ()-> memberService.join(member2));
+        assertThrows(ApiException.class, ()-> memberService.join(member2));
 
         //fail("예외가 발생해야 합니다.");
     }
