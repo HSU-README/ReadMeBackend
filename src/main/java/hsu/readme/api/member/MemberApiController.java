@@ -21,7 +21,7 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
-    @PostMapping("/api/v1/members")
+    @PostMapping("/api/v1/members/new")
     @ResponseBody
     public Response saveMemberV1(@RequestBody @Valid CreateMemberRequest request){
         Member member = new Member();
@@ -31,5 +31,12 @@ public class MemberApiController {
 
         Long savedId = memberService.join(member);
         return Response.response("S200", CREATED_USER, new CreateMemberResult(savedId));
+    }
+
+    @PostMapping("/api/v1/members/login")
+    @ResponseBody
+    public Response loginMemberV1(@RequestBody @Valid LoginMemberRequest request){
+        Long savedId = memberService.login(request.getEmail(), request.getPassword());
+        return Response.response("S200", LOGIN_SUCCESS, new CreateMemberResult(savedId));
     }
 }

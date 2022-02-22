@@ -48,5 +48,17 @@ public class MemberService{
             throw new ApiException(ExceptionEnum.DUPLICATE_USER_NAME_EXCEPTION);
         }
     }
+
+    /*
+     * 로그인
+     */
+    public Long login(String email, String pw){
+        List<Member> findMembers = memberRepository.findByEmail(email);
+        if(findMembers.isEmpty())
+            throw new ApiException(ExceptionEnum.LOGIN_EMAIL_EXCEPTION);
+        if(!findMembers.get(0).getPassword().equals(pw))
+            throw new ApiException(ExceptionEnum.LOGIN_PASSWORD_EXCEPTION);
+        return findMembers.get(0).getId();
+    }
 }
 

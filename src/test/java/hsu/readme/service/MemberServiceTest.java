@@ -64,4 +64,40 @@ class MemberServiceTest {
 
         //fail("예외가 발생해야 합니다.");
     }
+
+    @Test
+    public void 로그인() throws Exception{
+        //given
+        Member member = new Member();
+        member.setEmail("test@test.com");
+        member.setPassword("1234");
+
+        //when
+        memberService.join(member);
+        Long loginUserId = memberService.login(member.getEmail(), member.getPassword());
+    }
+
+    @Test
+    public void 로그인_이메일틀림() throws Exception{
+        //given
+        Member member = new Member();
+        member.setEmail("test@test.com");
+        member.setPassword("1234");
+
+        //when
+        memberService.join(member);
+        assertThrows(ApiException.class, ()->memberService.login(member.getEmail(), "123"));
+    }
+
+    @Test
+    public void 로그인_비밀번호틀림() throws Exception{
+        //given
+        Member member = new Member();
+        member.setEmail("test@test.com");
+        member.setPassword("1234");
+
+        //when
+        memberService.join(member);
+        assertThrows(ApiException.class, ()->memberService.login("test", "1234"));
+    }
 }

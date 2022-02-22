@@ -6,11 +6,9 @@ import lombok.Getter;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-public class CreateMemberRequest {
+public class LoginMemberRequest {
     @NotEmpty
     private String email;
     @NotEmpty
     private String password;
-    @NotEmpty
-    private String name;
 }
