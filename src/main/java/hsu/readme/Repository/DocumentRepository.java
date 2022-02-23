@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public class DocumentRepository {
 
+
     @PersistenceContext
     private EntityManager em;
 
@@ -31,6 +32,13 @@ public class DocumentRepository {
                 "select d from Document d " +
                         " where d.title = :title", Document.class)
                 .setParameter("title", title)
+                .getResultList();
+    }
+
+    public List<Document> findTopDocumentsOrderByLikeCnt(int cnt) {
+        return em.createQuery(
+                "select d from Document d " +
+                        " order by d.likeCnt desc ", Document.class)
                 .getResultList();
     }
 }

@@ -33,4 +33,8 @@ public class DocumentService {
     public Document findOne(Long documentId){
         return documentRepository.findOne(documentId);
     }
+
+    public List<Document> findTopDocuments(int cnt){
+        return documentRepository.findTopDocumentsOrderByLikeCnt(cnt);
+    }
 }
