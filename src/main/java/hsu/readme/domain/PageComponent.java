@@ -9,21 +9,19 @@ import javax.persistence.*;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
-@Getter
-@Setter
-public class DocumentComponent {
-
-    @Id
-    @GeneratedValue
+@Getter @Setter
+public class PageComponent {
+    @Id @GeneratedValue
+    @Column(name = "page_component_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "component_id")
     private Component component;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "document_id")
-    private Document document;
+    @JoinColumn(name = "document_page_id")
+    private DocumentPage documentPage;
 
     private int count;
 }
