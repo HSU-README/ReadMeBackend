@@ -15,12 +15,18 @@ public class AdService {
 
     private final AdRepository adRepository;
 
+    @Transactional
+    public Long join(Adv ad){
+        adRepository.save(ad);
+        return ad.getId();
+    }
+
     //광고 조회
-    private List<Adv> findAds(){
+    public List<Adv> findAds(){
         return adRepository.findAll();
     }
 
-    private Adv findOne(Long advId){
+    public Adv findOne(Long advId){
         return adRepository.findOne(advId);
     }
 }

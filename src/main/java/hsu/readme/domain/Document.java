@@ -29,6 +29,8 @@ public class Document {
 
     private String title;
 
+    private int likeCnt;
+
     private LocalDateTime documentDate;
 
     @Enumerated(EnumType.STRING)

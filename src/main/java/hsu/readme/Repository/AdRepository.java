@@ -13,6 +13,10 @@ public class AdRepository {
     @PersistenceContext
     private EntityManager em;
 
+    public void save(Adv ad){
+        em.persist(ad);
+    }
+
     public Adv findOne(Long id){
         return em.find(Adv.class, id);
     }
