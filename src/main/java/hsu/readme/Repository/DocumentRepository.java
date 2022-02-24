@@ -39,6 +39,7 @@ public class DocumentRepository {
         return em.createQuery(
                 "select d from Document d " +
                         " order by d.likeCnt desc ", Document.class)
+                .setMaxResults(cnt)
                 .getResultList();
     }
 }
