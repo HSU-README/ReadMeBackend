@@ -34,5 +34,8 @@ public class Document {
     private LocalDateTime documentDate;
 
     @Enumerated(EnumType.STRING)
+    private DocumentVisibility visibility;
+
+    @Enumerated(EnumType.STRING)
     private DocumentStatus status;
 }
