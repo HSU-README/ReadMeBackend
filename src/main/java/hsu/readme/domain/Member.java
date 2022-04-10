@@ -21,6 +21,17 @@ public class Member{
     private String email;
     private String password;
 
+    private String profileUrl;
+
+    @Enumerated(EnumType.STRING)
+    private University university;
+
+    @Enumerated(EnumType.STRING)
+    private Major major;
+
+    @Enumerated(EnumType.STRING)
+    private Interest interest;
+
     @OneToMany(mappedBy = "member")
     private List<Document> documents = new ArrayList<>();
 }
