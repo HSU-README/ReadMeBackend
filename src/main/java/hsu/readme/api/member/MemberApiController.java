@@ -6,12 +6,11 @@ import hsu.readme.domain.Member;
 import hsu.readme.service.MemberService;
 import lombok.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static hsu.readme.api.ResponseMessage.*;
 
@@ -40,5 +39,12 @@ public class MemberApiController {
     public Response loginMemberV1(@RequestBody @Valid LoginMemberRequest request){
         Long savedId = memberService.login(request.getEmail(), request.getPassword());
         return Response.response("S200", LOGIN_SUCCESS, new CreateMemberResult(savedId));
+    }
+
+    @GetMapping("/api/v1/members")
+    public Response memberInfoV1(@RequestParam Long id){
+        Member member = memberService.findOne(id);
+        return Response.response("S200", MEMBER_INFO_SUCCESS,
+                new GetMemberResult(member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterest()));
     }
 }

@@ -4,6 +4,7 @@ import hsu.readme.Repository.MemberRepository;
 import hsu.readme.domain.Member;
 import hsu.readme.exception.ApiException;
 import hsu.readme.exception.ExceptionEnum;
+import hsu.readme.service.MemberServiceValidation.MemberValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,33 +33,10 @@ public class MemberService {
 
     private void validateDuplicateMember(Member member) {
         //이메일과 이름에 대해 중복체크
-        validateDuplicateMemberByEmail(member.getEmail());
-        validateDuplicateMemberByName(member.getName());
-        emptyCheckMemberUniversity(member.getUniversity());
-        emptyCheckMemberMajor(member.getMajor());
-    }
-
-    private void emptyCheckMemberUniversity(String university) {
-        if (university.length() == 0) throw new ApiException(ExceptionEnum.EMPTY_USER_UNIVERSITY_EXCEPTION);
-    }
-
-    private void emptyCheckMemberMajor(String major) {
-        if (major.length() == 0) throw new ApiException(ExceptionEnum.EMPTY_USER_MAJOR_EXCEPTION);
-        if (StringUtils.isEmpty(major)) throw new ApiException(ExceptionEnum.EMPTY_USER_MAJOR_EXCEPTION);
-    }
-
-    private void validateDuplicateMemberByEmail(String email) {
-        List<Member> findMembersByEmail = memberRepository.findByEmail(email);
-        if (!findMembersByEmail.isEmpty()) {
-            throw new ApiException(ExceptionEnum.DUPLICATE_USER_EMAIL_EXCEPTION);
-        }
-    }
-
-    private void validateDuplicateMemberByName(String name) {
-        List<Member> findMembersByName = memberRepository.findByName(name);
-        if (!findMembersByName.isEmpty()) {
-            throw new ApiException(ExceptionEnum.DUPLICATE_USER_NAME_EXCEPTION);
-        }
+        MemberValidation.validateDuplicateMemberByEmail(memberRepository.findByName(member.getEmail()));
+        MemberValidation.validateDuplicateMemberByName(memberRepository.findByName(member.getName()));
+        MemberValidation.emptyCheckMemberUniversity(member.getUniversity());
+        MemberValidation.emptyCheckMemberMajor(member.getMajor());
     }
 
     /*
@@ -71,6 +49,12 @@ public class MemberService {
         if (!findMembers.get(0).getPassword().equals(pw))
             throw new ApiException(ExceptionEnum.LOGIN_PASSWORD_EXCEPTION);
         return findMembers.get(0).getId();
+    }
+
+    public Member findOne(Long memberId){
+        Member member = memberRepository.findOne(memberId);
+        if(member == null) throw new ApiException(ExceptionEnum.USER_NOT_EXIST_EXCEPTION);
+        return member;
     }
 }
 
