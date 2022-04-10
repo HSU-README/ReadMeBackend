@@ -1,7 +1,6 @@
 package hsu.readme.api.member;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -13,4 +12,6 @@ public class CreateMemberRequest {
     private String password;
     @NotEmpty
     private String name;
+    private String university;
+    private String major;
 }

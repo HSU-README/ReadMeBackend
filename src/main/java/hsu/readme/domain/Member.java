@@ -23,14 +23,10 @@ public class Member{
 
     private String profileUrl;
 
-    @Enumerated(EnumType.STRING)
-    private University university;
+    private String university;
+    private String major;
 
-    @Enumerated(EnumType.STRING)
-    private Major major;
-
-    @Enumerated(EnumType.STRING)
-    private Interest interest;
+    private String interest;
 
     @OneToMany(mappedBy = "member")
     private List<Document> documents = new ArrayList<>();

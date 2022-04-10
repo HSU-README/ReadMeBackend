@@ -28,6 +28,8 @@ public class MemberApiController {
         member.setName(request.getName());
         member.setEmail(request.getEmail());
         member.setPassword(request.getPassword());
+        member.setUniversity(request.getUniversity());
+        member.setMajor(request.getMajor());
 
         Long savedId = memberService.join(member);
         return Response.response("S200", CREATED_USER, new CreateMemberResult(savedId));

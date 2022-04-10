@@ -2,6 +2,7 @@ package hsu.readme.exception;
 
 import hsu.readme.api.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -51,6 +52,17 @@ public class ApiExceptionAdvice {
                 .body(ApiExceptionEntity.builder()
                         .errorCode(ExceptionEnum.INTERNAL_SERVER_ERROR.getCode())
                         .errorMessage(e.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public ResponseEntity<ApiExceptionEntity> exceptionHandler(HttpServletRequest request, final MethodArgumentNotValidException e) {
+        e.printStackTrace();
+        return ResponseEntity
+                .status(ExceptionEnum.METHODARGUMENTNOTVALIDEXCEPTION.getStatus())
+                .body(ApiExceptionEntity.builder()
+                        .errorCode(ExceptionEnum.METHODARGUMENTNOTVALIDEXCEPTION.getCode())
+                        .errorMessage(ExceptionEnum.METHODARGUMENTNOTVALIDEXCEPTION.getMessage())
                         .build());
     }
 }
