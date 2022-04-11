@@ -25,6 +25,8 @@ public class MemberApiController {
         member.setPassword(request.getPassword());
         member.setUniversity(request.getUniversity());
         member.setMajor(request.getMajor());
+        member.setProfileUrl("");
+        member.setInterests("");
 
         Long savedId = memberService.join(member);
         return Response.response("S200", CREATED_USER, new MemberResult(savedId));
@@ -41,15 +43,14 @@ public class MemberApiController {
     public Response memberInfoV1(@PathVariable Long id){
         Member member = memberService.findOne(id);
         return Response.response("S200", MEMBER_INFO_SUCCESS,
-                new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterest()));
+                new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests()));
     }
 
     @PutMapping("/api/v1/members/{id}")
     public Response putMemberInfoV1(@PathVariable Long id, @RequestBody @Valid PutMemberRequest request){
-        memberService.update(id, request.getName(), request.getProfileUrl(), request.getUniversity(), request.getMajor(), request.getInterest());
+        memberService.update(id, request.getName(), request.getProfileUrl(), request.getUniversity(), request.getMajor(), request.getInterests());
         Member member = memberService.findOne(id);
-        System.out.println(member.getEmail() + " " + member.getUniversity());
         return Response.response("S200", PUT_MEMBER_INFO_SUCCESS,
-                new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterest()));
+                new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests()));
     }
 }

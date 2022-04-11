@@ -69,7 +69,7 @@ public class MemberService {
         member.setProfileUrl(profileUrl);
         member.setUniversity(university);
         member.setMajor(major);
-        member.setInterest(interest);
+        member.setInterests(interest);
     }
 }
 

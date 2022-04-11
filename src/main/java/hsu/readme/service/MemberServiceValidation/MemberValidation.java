@@ -15,7 +15,6 @@ public class MemberValidation {
 
     public static void emptyCheckMemberMajor(String major) {
         if (major.length() == 0) throw new ApiException(ExceptionEnum.EMPTY_USER_MAJOR_EXCEPTION);
-        if (StringUtils.isEmpty(major)) throw new ApiException(ExceptionEnum.EMPTY_USER_MAJOR_EXCEPTION);
     }
 
     public static void validateDuplicateMemberByEmail(List<Member> findMembersByEmail) {

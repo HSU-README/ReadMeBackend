@@ -26,7 +26,7 @@ public class Member{
     private String university;
     private String major;
 
-    private String interest;
+    private String interests;
 
     @OneToMany(mappedBy = "member")
     private List<Document> documents = new ArrayList<>();
