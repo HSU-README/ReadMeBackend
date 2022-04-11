@@ -56,5 +56,20 @@ public class MemberService {
         if(member == null) throw new ApiException(ExceptionEnum.USER_NOT_EXIST_EXCEPTION);
         return member;
     }
+
+    /*
+    * 멤버 정보 수정
+    */
+    @Transactional
+    public void update(Long id, String name, String profileUrl, String university, String major, String interest){
+        Member member = memberRepository.findOne(id);
+        if(member == null) throw new ApiException(ExceptionEnum.USER_NOT_EXIST_EXCEPTION);
+
+        member.setName(name);
+        member.setProfileUrl(profileUrl);
+        member.setUniversity(university);
+        member.setMajor(major);
+        member.setInterest(interest);
+    }
 }
 

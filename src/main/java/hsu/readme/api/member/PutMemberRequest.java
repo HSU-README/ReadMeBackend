@@ -1,12 +1,12 @@
 package hsu.readme.api.member;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
-@AllArgsConstructor
-class GetMemberResult {
-    private Long id;
+public class PutMemberRequest {
+    @NotEmpty
     private String name;
     private String profileUrl;
     private String university;

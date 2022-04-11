@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 
 
 @Data
-public class CreateMemberResult {
+public class MemberResult {
     private Long id;
 
-    public CreateMemberResult(Long id) {
+    public MemberResult(Long id) {
         this.id = id;
     }
 }
