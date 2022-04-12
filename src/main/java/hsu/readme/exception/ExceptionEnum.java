@@ -22,7 +22,7 @@ public enum ExceptionEnum {
     ACCESS_DENIED_EXCEPTION(HttpStatus.UNAUTHORIZED, "E002"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "E001"),
     SECURITY_01(HttpStatus.UNAUTHORIZED, "E002", "권한이 없습니다."),
-    METHODARGUMENTNOTVALIDEXCEPTION(HttpStatus.BAD_REQUEST, "EV001", "메소드가 제대로 보내지지 않았습니다.");
+    METHODARGUMENTNOTVALIDEXCEPTION(HttpStatus.BAD_REQUEST, "EV001", NOT_VALIDATE_FORM);
 
     private final HttpStatus status;
     private final String code;
