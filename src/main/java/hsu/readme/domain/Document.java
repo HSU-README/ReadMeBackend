@@ -6,7 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -32,6 +34,9 @@ public class Document {
     private int likeCnt;
 
     private LocalDateTime documentDate;
+
+    @OneToMany(mappedBy = "document")
+    private Set<Tag> tags = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private DocumentVisibility visibility;

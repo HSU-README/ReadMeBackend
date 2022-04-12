@@ -1,6 +1,7 @@
 package hsu.readme.service;
 
 import hsu.readme.domain.Document;
+import hsu.readme.domain.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,21 @@ class DocumentServiceTest {
         documentService.join(document);
 
         //then
+    }
 
+    @Test
+    @Rollback(value = false)
+    public void 태그_확인() throws Exception{
+        //given
+        Document document = new Document();
+        document.setTitle("asd");
+        Tag tag = new Tag();
+        tag.setName("IT");
+
+        document.getTags().add(tag);
+
+        //when
+        documentService.join(document);
+        //then
     }
 }

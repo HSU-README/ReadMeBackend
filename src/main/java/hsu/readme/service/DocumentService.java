@@ -37,4 +37,10 @@ public class DocumentService {
     public List<Document> findTopDocuments(int cnt){
         return documentRepository.findTopDocumentsOrderByLikeCnt(cnt);
     }
+
+    public List<Document> findDocumentsWithTag(){
+        List<Document> find = documentRepository.findAllWithTags();
+        System.out.println("service: " + find.size());
+        return find;
+    }
 }

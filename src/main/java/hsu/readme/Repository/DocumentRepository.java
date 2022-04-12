@@ -38,8 +38,23 @@ public class DocumentRepository {
     public List<Document> findTopDocumentsOrderByLikeCnt(int cnt) {
         return em.createQuery(
                 "select d from Document d " +
+                        " join fetch d.tags t " +
                         " order by d.likeCnt desc ", Document.class)
                 .setMaxResults(cnt)
+                .getResultList();
+    }
+
+    public List<Document> findAllWithTags(){
+        return em.createQuery("select d from Document d " +
+                "left join fetch d.tags t", Document.class)
+                .getResultList();
+    }
+
+    public List<Document> findAllWithTags(int offset, int limit){
+        return em.createQuery("select d from Document d " +
+                " join fetch d.tags t", Document.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
                 .getResultList();
     }
 }

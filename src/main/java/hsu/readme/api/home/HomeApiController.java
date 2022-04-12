@@ -4,6 +4,7 @@ import hsu.readme.api.Response;
 import hsu.readme.domain.Adv;
 import hsu.readme.domain.Document;
 import hsu.readme.domain.DocumentStatus;
+import hsu.readme.domain.Tag;
 import hsu.readme.service.AdService;
 import hsu.readme.service.DocumentService;
 import lombok.RequiredArgsConstructor;
@@ -30,18 +31,24 @@ public class HomeApiController {
         makeAds();
 
         List<Adv> ads = adService.findAds();
-        List<Document> findDocuments = documentService.findTopDocuments(5);
+        List<Document> findDocuments = documentService.findDocumentsWithTag();
+
         List<HomeInfoDocDto> topDocuments = findDocuments.stream()
-                .map(d -> new HomeInfoDocDto(d.getId(), d.getTitle(), d.getLikeCnt(), d.getStatus()))
+                .map(HomeInfoDocDto::new)
                 .collect(Collectors.toList());
         return Response.response("S200", HOME_INFO_SUCCESS, new HomeInfoResult(ads, topDocuments));
     }
 
     private void makeDocuments() {
-        for(int i=0; i<2; i++) {
+        for(int i=0; i<10; i++) {
             Document document = new Document();
+//            Tag tag = new Tag();
+//            tag.setName("hello"+i);
+
             document.setTitle("test"+i);
             document.setLikeCnt(i);
+//            document.getTags().add(tag);
+
             if (i % 2 == 0) {
                 document.setStatus(DocumentStatus.WRITE);
             } else {
