@@ -34,7 +34,7 @@ public class DocumentService {
         return documentRepository.findOne(documentId);
     }
 
-    public List<Document> findTopDocuments(int cnt){
+    public List<Document> findDocumentsByLikeDesc(int cnt){
         return documentRepository.findTopDocumentsOrderByLikeCnt(cnt);
     }
 

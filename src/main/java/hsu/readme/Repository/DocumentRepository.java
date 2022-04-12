@@ -38,7 +38,7 @@ public class DocumentRepository {
     public List<Document> findTopDocumentsOrderByLikeCnt(int cnt) {
         return em.createQuery(
                 "select d from Document d " +
-                        " join fetch d.tags t " +
+                        "left join fetch d.tags t " +
                         " order by d.likeCnt desc ", Document.class)
                 .setMaxResults(cnt)
                 .getResultList();

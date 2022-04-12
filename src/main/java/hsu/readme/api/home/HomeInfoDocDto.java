@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Getter
 public class HomeInfoDocDto {
-    private Long documentId;
+    private Long id;
     private String title;
     private int likeCnt;
     @JsonProperty("status")
@@ -21,7 +21,7 @@ public class HomeInfoDocDto {
     private List<DocumentTagDto> tags;
 
     public HomeInfoDocDto(Document document){
-        this.documentId = document.getId();
+        this.id = document.getId();
         this.title = document.getTitle();
         this.likeCnt = document.getLikeCnt();
         this.documentStatus = document.getStatus();

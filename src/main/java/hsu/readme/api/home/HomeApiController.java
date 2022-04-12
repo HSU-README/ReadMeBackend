@@ -31,7 +31,7 @@ public class HomeApiController {
         makeAds();
 
         List<Adv> ads = adService.findAds();
-        List<Document> findDocuments = documentService.findDocumentsWithTag();
+        List<Document> findDocuments = documentService.findDocumentsByLikeDesc(5);
 
         List<HomeInfoDocDto> topDocuments = findDocuments.stream()
                 .map(HomeInfoDocDto::new)
@@ -42,12 +42,12 @@ public class HomeApiController {
     private void makeDocuments() {
         for(int i=0; i<10; i++) {
             Document document = new Document();
-//            Tag tag = new Tag();
-//            tag.setName("hello"+i);
+            Tag tag = new Tag();
+            tag.setName("IT"+i);
 
             document.setTitle("test"+i);
             document.setLikeCnt(i);
-//            document.getTags().add(tag);
+            document.getTags().add(tag);
 
             if (i % 2 == 0) {
                 document.setStatus(DocumentStatus.WRITE);
@@ -59,7 +59,7 @@ public class HomeApiController {
     }
 
     private void makeAds() {
-        for(int i=0; i<5; i++) {
+        for(int i=0; i<4; i++) {
             Adv ad = new Adv();
             ad.setImgUrl("test"+i);
             adService.join(ad);
