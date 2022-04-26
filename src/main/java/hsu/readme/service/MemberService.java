@@ -33,7 +33,7 @@ public class MemberService {
 
     private void validateDuplicateMember(Member member) {
         //이메일과 이름에 대해 중복체크
-        MemberValidation.validateDuplicateMemberByEmail(memberRepository.findByName(member.getEmail()));
+        MemberValidation.validateDuplicateMemberByEmail(memberRepository.findByEmail(member.getEmail()));
         MemberValidation.validateDuplicateMemberByName(memberRepository.findByName(member.getName()));
         MemberValidation.emptyCheckMemberUniversity(member.getUniversity());
         MemberValidation.emptyCheckMemberMajor(member.getMajor());
