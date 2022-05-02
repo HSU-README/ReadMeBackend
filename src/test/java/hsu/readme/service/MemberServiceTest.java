@@ -24,6 +24,10 @@ class MemberServiceTest {
     public void 회원가입() throws Exception{
         Member member = new Member();
         member.setName("kim");
+        member.setEmail("test");
+        member.setPassword("test123");
+        member.setUniversity("uni");
+        member.setMajor("maj");
 
         Long savedId = memberService.join(member);
         assertEquals(member, memberRepository.findOne(savedId));
@@ -35,10 +39,16 @@ class MemberServiceTest {
         Member member1 = new Member();
         member1.setEmail("test@test.com");
         member1.setName("kim");
+        member1.setPassword("test123");
+        member1.setUniversity("uni");
+        member1.setMajor("maj");
 
         Member member2 = new Member();
         member2.setEmail("test@test.com");
         member2.setName("cho");
+        member2.setPassword("test123");
+        member2.setUniversity("uni");
+        member2.setMajor("maj");
 
         //when
         memberService.join(member1);
@@ -53,10 +63,16 @@ class MemberServiceTest {
         Member member1 = new Member();
         member1.setEmail("test@test.com");
         member1.setName("cho");
+        member1.setPassword("test123");
+        member1.setUniversity("uni");
+        member1.setMajor("maj");
 
         Member member2 = new Member();
         member2.setEmail("test1@test.com");
         member2.setName("cho");
+        member2.setPassword("test123");
+        member2.setUniversity("uni");
+        member2.setMajor("maj");
 
         //when
         memberService.join(member1);
@@ -71,6 +87,9 @@ class MemberServiceTest {
         Member member = new Member();
         member.setEmail("test@test.com");
         member.setPassword("1234");
+        member.setPassword("test123");
+        member.setUniversity("uni");
+        member.setMajor("maj");
 
         //when
         memberService.join(member);
@@ -83,6 +102,9 @@ class MemberServiceTest {
         Member member = new Member();
         member.setEmail("test@test.com");
         member.setPassword("1234");
+        member.setPassword("test123");
+        member.setUniversity("uni");
+        member.setMajor("maj");
 
         //when
         memberService.join(member);
@@ -95,6 +117,8 @@ class MemberServiceTest {
         Member member = new Member();
         member.setEmail("test@test.com");
         member.setPassword("1234");
+        member.setMajor("major");
+        member.setUniversity("university");
 
         //when
         memberService.join(member);
