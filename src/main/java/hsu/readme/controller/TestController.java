@@ -14,14 +14,8 @@ public class TestController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
-    @GetMapping("/test")
+    @GetMapping("/")
     public String test(){
-        Member member = new Member();
-        member.setName("Jgeun");
-        Long savedId = memberService.join(member);
-        Member savedMember = memberRepository.findOne(savedId);
-
-        return "memberService: " + savedId + " name: " + member.getName() + "\n " +
-                "memberRepository:  " + savedMember.getId() + " name: " +savedMember.getName();
+        return "테스트 서버 입니다.";
     }
 }
