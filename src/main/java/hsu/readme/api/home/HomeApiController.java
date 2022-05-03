@@ -1,14 +1,13 @@
 package hsu.readme.api.home;
 
 import hsu.readme.api.Response;
-import hsu.readme.domain.Adv;
-import hsu.readme.domain.Document;
-import hsu.readme.domain.DocumentStatus;
-import hsu.readme.domain.Tag;
+import hsu.readme.domain.*;
 import hsu.readme.service.AdService;
 import hsu.readme.service.DocumentService;
+import hsu.readme.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +20,7 @@ import static hsu.readme.api.ResponseMessage.HOME_INFO_SUCCESS;
 @RequiredArgsConstructor
 public class HomeApiController {
 
+    private final MemberService memberService;
     private final DocumentService documentService;
     private final AdService adService;
 
@@ -39,7 +39,18 @@ public class HomeApiController {
         return Response.response("S200", HOME_INFO_SUCCESS, new HomeInfoResult(ads, topDocuments));
     }
 
+
+
     private void makeDocuments() {
+        Member member = new Member();
+        member.setId(1000L);
+        member.setMajor("major");
+        member.setEmail("user@user.com");
+        member.setPassword("user");
+        member.setUniversity("user");
+
+        memberService.join(member);
+
         for(int i=0; i<10; i++) {
             Document document = new Document();
             Tag tag = new Tag();
@@ -48,6 +59,7 @@ public class HomeApiController {
             document.setTitle("test"+i);
             document.setLikeCnt(i);
             document.getTags().add(tag);
+            document.setMember(member);
 
             if (i % 2 == 0) {
                 document.setStatus(DocumentStatus.WRITE);

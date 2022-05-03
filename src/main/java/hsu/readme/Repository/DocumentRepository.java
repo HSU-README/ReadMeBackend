@@ -57,4 +57,10 @@ public class DocumentRepository {
                 .setMaxResults(limit)
                 .getResultList();
     }
+
+    public List<Document> findWithMember(Long id){
+        return em.createQuery("select d from Document d " +
+                " join fetch d.member m", Document.class)
+                .getResultList();
+    }
 }

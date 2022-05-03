@@ -43,4 +43,8 @@ public class DocumentService {
         System.out.println("service: " + find.size());
         return find;
     }
+
+    public List<Document> findDocumentWithMember(Long id){
+        return documentRepository.findWithMember(id);
+    }
 }
