@@ -35,8 +35,10 @@ public class Document {
 
     private LocalDateTime documentDate;
 
-    @OneToMany(mappedBy = "document")
-    private Set<Tag> tags = new HashSet<>();
+    private String docUrl;
+
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+    private List<Tag> tags = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private DocumentVisibility visibility;

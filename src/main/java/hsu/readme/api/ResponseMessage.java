@@ -17,4 +17,7 @@ public class ResponseMessage {
 
     //HomeApiController
     public static final String HOME_INFO_SUCCESS = "홈화면 조회 성공";
+
+    //DocApiController
+    public static final String DOC_INFO_SUCCESS = "문서 정보 조회 성공";
 }

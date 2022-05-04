@@ -3,21 +3,21 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://hsu-readme.c6g1mb0aat8t.ap-northeast-2.rds.amazonaws.com:3306/hsureadme
-    username: admin
-    password: Lifesibal22
+#    url: jdbc:mysql://hsu-readme.c6g1mb0aat8t.ap-northeast-2.rds.amazonaws.com:3306/hsureadme
+#    username: admin
+#    password: Lifesibal22
 
-#    local h2
+#    local: h2
 #    url: jdbc:h2:tcp://localhost/~/readme
 #    username: jgeun
 #    password: 1234
 #    driver-class-name: org.h2.Driver
 
-#    local mysql
-#    url: jdbc:mysql://localhost:3306/HsuReadMe?serverTimezone=Asia/Seoul
-#    username: root
-#    password: 1234
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+    local: mysql
+    url: jdbc:mysql://localhost:3306/HsuReadMe?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 
 

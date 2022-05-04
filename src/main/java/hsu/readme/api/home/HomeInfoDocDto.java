@@ -1,11 +1,9 @@
 package hsu.readme.api.home;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import hsu.readme.api.Tag.DocumentTagDto;
 import hsu.readme.domain.Document;
 import hsu.readme.domain.DocumentStatus;
-import hsu.readme.domain.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.List;
@@ -28,15 +26,6 @@ public class HomeInfoDocDto {
         this.tags = document.getTags().stream()
                 .map(DocumentTagDto::new)
                 .collect(Collectors.toList());
-    }
-
-    @Data
-    static class DocumentTagDto{
-        private String name;
-
-        DocumentTagDto(Tag tag){
-            this.name = tag.getName();
-        }
     }
 }
 

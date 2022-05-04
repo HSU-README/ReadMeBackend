@@ -60,7 +60,9 @@ public class DocumentRepository {
 
     public List<Document> findWithMember(Long id){
         return em.createQuery("select d from Document d " +
-                " join fetch d.member m", Document.class)
+                " join fetch d.member m" +
+                " where d.id = :id", Document.class)
+                .setParameter("id", id)
                 .getResultList();
     }
 }
