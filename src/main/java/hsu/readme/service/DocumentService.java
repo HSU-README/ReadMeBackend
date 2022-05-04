@@ -44,7 +44,7 @@ public class DocumentService {
         return find;
     }
 
-    public List<Document> findDocumentWithMember(Long id){
+    public Document findDocumentWithMember(Long id){
         return documentRepository.findWithMember(id);
     }
 }

@@ -23,11 +23,8 @@ public class DocApiController {
 
     @GetMapping("/api/v1/doc/{id}/preview")
     public Response docPreviewV1(@PathVariable Long id){ //doc id 보내줌
-        List<Document> documents = documentService.findDocumentWithMember(id);
-        List<DocInfoDto> doc = documents.stream()
-                .map(DocInfoDto::new)
-                .collect(Collectors.toList());
-        return Response.response("S200", DOC_INFO_SUCCESS, doc);
+        Document document = documentService.findDocumentWithMember(id);
+        return Response.response("S200", DOC_INFO_SUCCESS, new DocInfoDto(document));
     }
 
     @GetMapping("/api/v1/doc/{id}")
