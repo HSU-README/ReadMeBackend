@@ -55,6 +55,7 @@ public class DocApiController {
         return Response.response("S200", DOC_CREATE_SUCCESS, new CreateDocResponse(findDoc.getId()));
     }
 
+    //여기까지 진행 하고 테이블 수정들어가야함.
 //    @PostMapping("/api/v1/doc/edit/{id}")
 //    public Response storeDocComponent() {
 //
