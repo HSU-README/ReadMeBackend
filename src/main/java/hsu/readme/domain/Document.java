@@ -6,9 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -27,7 +25,7 @@ public class Document {
     private Member member;
 
     @OneToMany(mappedBy = "document")
-    private List<DocumentPage> documentPages = new ArrayList<>();
+    private List<DocComponent> docComponents = new ArrayList<>();
 
     private String title;
 
