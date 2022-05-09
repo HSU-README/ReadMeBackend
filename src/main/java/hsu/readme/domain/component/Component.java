@@ -22,4 +22,5 @@ public class Component {
     private int width;
     private float x;
     private float y;
+    private int zIndex;
 }
