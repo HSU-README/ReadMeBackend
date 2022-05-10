@@ -44,7 +44,7 @@ public class DocumentService {
         return find;
     }
 
-    public Document findDocumentWithMember(Long id){
-        return documentRepository.findWithMember(id);
+    public Document findDocumentWithMember(Long docId){
+        return documentRepository.findWithMember(docId);
     }
 }

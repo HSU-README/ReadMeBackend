@@ -17,7 +17,6 @@ public class Component {
     @Column(name = "component_id")
     private Long id;
 
-    private String name;
     private int height;
     private int width;
     private float x;

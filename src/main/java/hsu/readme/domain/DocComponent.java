@@ -23,4 +23,12 @@ public class DocComponent {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "component_id")
     private Component component;
+
+    //==생성 메서드==//
+    public static DocComponent createDocComponent(Component component) {
+        DocComponent docComponent = new DocComponent();
+        docComponent.setComponent(component);
+
+        return docComponent;
+    }
 }

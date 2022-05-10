@@ -4,9 +4,13 @@ import hsu.readme.api.Response;
 import hsu.readme.api.home.HomeInfoResult;
 import hsu.readme.api.member.CreateMemberRequest;
 import hsu.readme.domain.Document;
+import hsu.readme.domain.Member;
 import hsu.readme.service.ComponentService;
 import hsu.readme.service.DocumentService;
+import hsu.readme.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.Store;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.Doc;
@@ -21,6 +25,7 @@ import static hsu.readme.api.ResponseMessage.DOC_INFO_SUCCESS;
 @RequiredArgsConstructor
 public class DocApiController {
 
+    private final MemberService memberService;
     private final DocumentService documentService;
     private final ComponentService componentService;
 
@@ -56,8 +61,18 @@ public class DocApiController {
     }
 
     //여기까지 진행 하고 테이블 수정들어가야함.
-//    @PostMapping("/api/v1/doc/edit/{id}")
-//    public Response storeDocComponent() {
-//
-//    }
+    @PostMapping("/api/v1/doc/edit/{id}")
+    public Response storeDocComponent(@PathVariable Long id, @RequestBody @Valid StoreDocRequest request) {
+
+        Document findDoc = documentService.findOne(id);
+
+        try{
+            Document findDocWithMember = documentService.findDocumentWithMember(id);
+        }catch (EmptyResultDataAccessException e) {
+//            Member findMember = memberService.findOne(request.getUserId());
+//            findMember.getDocuments().add(findDoc);
+        }
+
+        return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(findDoc.getId()));
+    }
 }
