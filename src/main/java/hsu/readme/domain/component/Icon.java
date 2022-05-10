@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-@DiscriminatorValue("image")
-public class Image extends Component{
-    private String imgUrl;
+@DiscriminatorValue("icon")
+public class Icon extends Component{
+    private String iconUrl;
 }

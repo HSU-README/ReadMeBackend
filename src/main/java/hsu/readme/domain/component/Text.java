@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-@DiscriminatorValue("CText")
+@DiscriminatorValue("text")
 public class Text extends Component{
     private String contents;
 }

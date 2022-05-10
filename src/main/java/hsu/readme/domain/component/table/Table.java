@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@DiscriminatorValue("CTable")
+@DiscriminatorValue("table")
 public class Table extends Component {
     int tableCol;
     int tableRow;

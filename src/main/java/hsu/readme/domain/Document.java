@@ -43,4 +43,34 @@ public class Document {
 
     @Enumerated(EnumType.STRING)
     private DocumentStatus status;
+
+    //== 연관관계 메서드 == //
+    public void setMember(Member member) {
+        this.member = member;
+        member.getDocuments().add(this);
+    }
+
+    public void addDocComponent(DocComponent docComponent) {
+        docComponents.add(docComponent);
+        docComponent.setDocument(this);
+    }
+
+    //== 생성 메서드 ==//
+    public static Document createDocument(Member member, DocComponent... docComponents) {
+        Document document = new Document();
+        document.setMember(member);
+        for (DocComponent docComp : docComponents) {
+            document.addDocComponent(docComp);
+        }
+        document.setDocumentDate(LocalDateTime.now());
+        return document;
+    }
+
+    /*
+    //== 저장 메서드 ==//
+    public static Document storeDocument(DocComponent... docComponents) {
+        for (DocComponent docComp : docComponents) {
+            document.addDocComponent(docComp);
+        }
+    }*/
 }
