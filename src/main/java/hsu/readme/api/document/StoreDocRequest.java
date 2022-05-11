@@ -9,12 +9,14 @@ import java.util.List;
 @Getter
 public class StoreDocRequest {
 
+    private Long docId;
     private Long memberId;
     @JsonProperty("components")
     private List<DocComponentDto> docComponentDtos;
 
     public StoreDocRequest() {}
-    public StoreDocRequest(Long memberId, List<DocComponentDto> docComponentDtos) {
+    public StoreDocRequest(Long docId, Long memberId, List<DocComponentDto> docComponentDtos) {
+        this.docId = docId;
         this.memberId = memberId;
         this.docComponentDtos = docComponentDtos;
     }

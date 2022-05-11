@@ -41,11 +41,11 @@ public class ComponentApiController {
         return Response.response("S200", DOC_INFO_SUCCESS, documentInfo);
     }
 
-    @PostMapping("/api/v1/doc/edit/{docId}")
-    public Response storeDocComponent(@PathVariable Long docId, @RequestBody @Valid StoreDocRequest request) {
+    @PostMapping("/api/v1/doc/edit")
+    public Response storeDocComponent(@RequestBody @Valid StoreDocRequest request) {
 
         try {
-            Document document = documentService.findOne(docId);
+            Document document = documentService.findOne(request.getDocId());
             documentService.deleteDocument(document);
         } catch (Exception e){
 
@@ -73,7 +73,7 @@ public class ComponentApiController {
             componentIds.add(componentId);
         }
 
-        Long docSavedId = documentService.makeDocument(docId, request.getMemberId(), componentIds);
+        Long docSavedId = documentService.makeDocument(request.getDocId(), request.getMemberId(), componentIds);
 
         return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docSavedId));
     }
