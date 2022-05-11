@@ -1,5 +1,6 @@
 package hsu.readme.api.component;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import hsu.readme.api.document.DocComponentDto;
 import hsu.readme.domain.DocComponent;
 import hsu.readme.domain.Document;
@@ -20,6 +21,7 @@ public class DocInfoDto {
     private int likeCnt;
     private String docUrl;
     private String designer;
+    @JsonProperty("components")
     private List<DocComponentDto> docComponentDtos;
 
     public DocInfoDto(Document document) {

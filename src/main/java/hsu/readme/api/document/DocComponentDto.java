@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 @Getter
 public class DocComponentDto {
     private String type;
-    private int height;
-    private int width;
     private float x;
     private float y;
     private int zIndex;
+    private int height;
+    private int width;
     private String imgUrl;
     private String iconUrl;
     private String contents;
@@ -51,9 +51,6 @@ public class DocComponentDto {
             this.tableContents = ((Table)docComponent.getComponent()).getContents()
                     .stream().map(TableContentsDto::new).collect(Collectors.toList());
         }
-
-
-
     }
 
     @Data
