@@ -1,19 +1,13 @@
 package hsu.readme.api.document;
 
 import hsu.readme.domain.DocComponent;
-import hsu.readme.domain.Document;
-import hsu.readme.domain.component.Component;
 import hsu.readme.domain.component.Icon;
 import hsu.readme.domain.component.Image;
 import hsu.readme.domain.component.Text;
 import hsu.readme.domain.component.table.Table;
-import hsu.readme.domain.component.table.TableContents;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Getter
@@ -29,7 +23,7 @@ public class DocComponentDto {
     private String contents;
     private int tableCol;
     private int tableRow;
-    private List<TableContentsDto> tableContents;
+    private String tableContents;
 
     public DocComponentDto() {}
     public DocComponentDto(DocComponent docComponent) {
@@ -40,7 +34,7 @@ public class DocComponentDto {
         this.y = docComponent.getComponent().getY();
         this.zIndex = docComponent.getComponent().getZIndex();
         if(docComponent.getComponent() instanceof Text) {
-            this.contents = ((Text)docComponent.getComponent()).getContents();
+            this.contents = ((Text)docComponent.getComponent()).getTextContents();
         } else if (docComponent.getComponent() instanceof Image) {
             this.imgUrl = ((Image)docComponent.getComponent()).getImgUrl();
         } else if (docComponent.getComponent() instanceof Icon) {
@@ -48,17 +42,7 @@ public class DocComponentDto {
         } else if (docComponent.getComponent() instanceof Table) {
             this.tableCol = ((Table)docComponent.getComponent()).getTableCol();
             this.tableRow = ((Table)docComponent.getComponent()).getTableRow();
-            this.tableContents = ((Table)docComponent.getComponent()).getContents()
-                    .stream().map(TableContentsDto::new).collect(Collectors.toList());
-        }
-    }
-
-    @Data
-    class TableContentsDto{
-        private String contents;
-
-        public TableContentsDto(TableContents contents) {
-            this.contents = contents.getContents();
+            this.tableContents = ((Table)docComponent.getComponent()).getTableContents();
         }
     }
 }

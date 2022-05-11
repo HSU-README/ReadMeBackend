@@ -2,7 +2,6 @@ package hsu.readme.api.component;
 
 import hsu.readme.api.Response;
 import hsu.readme.api.document.DocComponentDto;
-import hsu.readme.api.document.DocInfoDto_legacy;
 import hsu.readme.api.document.StoreDocRequest;
 import hsu.readme.api.document.StoreDocResponse;
 import hsu.readme.domain.Document;
@@ -18,11 +17,9 @@ import hsu.readme.service.ComponentService;
 import hsu.readme.service.DocumentService;
 import hsu.readme.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +96,7 @@ public class ComponentApiController {
     private Long setTextComponent(DocComponentDto dto) {
         Text text = new Text();
         setComponent(text, dto);
-        text.setContents(dto.getContents());
+//        text.setTextContents(dto.getContents());
         componentService.saveComponent(text);
 
         return text.getId();
@@ -117,9 +114,9 @@ public class ComponentApiController {
     private Long setTableComponent(DocComponentDto dto) {
         Table table = new Table();
         setComponent(table, dto);
-        table.setTableCol(dto.getTableCol());
-        table.setTableRow(dto.getTableRow());
-        //table.setContents(dto.getTableContents());
+//        table.setTableCol(dto.getTableCol());
+//        table.setTableRow(dto.getTableRow());
+//        table.setTableContents(dto.getContents());
         componentService.saveComponent(table);
         return table.getId();
     }
