@@ -13,6 +13,7 @@ public class StoreDocRequest {
     @JsonProperty("components")
     private List<DocComponentDto> docComponentDtos;
 
+    public StoreDocRequest() {}
     public StoreDocRequest(Long memberId, List<DocComponentDto> docComponentDtos) {
         this.memberId = memberId;
         this.docComponentDtos = docComponentDtos;

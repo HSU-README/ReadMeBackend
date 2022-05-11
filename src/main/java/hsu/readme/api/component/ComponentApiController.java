@@ -2,6 +2,7 @@ package hsu.readme.api.component;
 
 import hsu.readme.api.Response;
 import hsu.readme.api.document.DocComponentDto;
+import hsu.readme.api.document.DocInfoDto;
 import hsu.readme.api.document.StoreDocRequest;
 import hsu.readme.api.document.StoreDocResponse;
 import hsu.readme.domain.DocComponent;
@@ -24,7 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static hsu.readme.api.ResponseMessage.DOC_CREATE_SUCCESS;
+import static hsu.readme.api.ResponseMessage.DOC_INFO_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,11 +39,15 @@ public class ComponentApiController {
     private final DocumentService documentService;
     private final ComponentService componentService;
 
-    //여기까지 진행 하고 테이블 수정들어가야함.
+
+
     @PostMapping("/api/v1/doc/edit/{docId}")
     public Response storeDocComponent(@PathVariable Long docId, @RequestBody @Valid StoreDocRequest request) {
-        Document findDoc = documentService.findOne(docId);
 
+        Document document = documentService.findOne(docId);
+        documentService.deleteDocument(document);
+
+        List<Long> componentIds = new ArrayList<>();
         for (DocComponentDto dto : request.getDocComponentDtos()) {
             String type = dto.getType();
 
@@ -56,15 +65,13 @@ public class ComponentApiController {
                 case "table":
                     componentId = setTableComponent(dto);
                     break;
-                default:
-                    componentId = 100;
             }
-            documentService.makeDocument(request.getMemberId(), componentId);
-
-
+            componentIds.add(componentId);
         }
 
-        return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(findDoc.getId()));
+        documentService.makeDocument(docId, request.getMemberId(), componentIds);
+
+        return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docId));
     }
 
     private void setComponent(Component component, DocComponentDto dto) {
@@ -75,7 +82,7 @@ public class ComponentApiController {
         component.setHeight(dto.getHeight());
     }
 
-    private <T> Long setTextComponent(DocComponentDto dto) {
+    private Long setTextComponent(DocComponentDto dto) {
         Text text = new Text();
         setComponent(text, dto);
         text.setContents(dto.getContents());

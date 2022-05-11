@@ -24,7 +24,7 @@ public class Document {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "document")
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private List<DocComponent> docComponents = new ArrayList<>();
 
     private String title;
@@ -56,7 +56,7 @@ public class Document {
     }
 
     //== 생성 메서드 ==//
-    public static Document createDocument(Member member, DocComponent... docComponents) {
+    public static Document createDocument(Long docId, Member member, List<DocComponent> docComponents) {
         Document document = new Document();
         document.setMember(member);
         for (DocComponent docComp : docComponents) {
@@ -66,11 +66,5 @@ public class Document {
         return document;
     }
 
-    /*
-    //== 저장 메서드 ==//
-    public static Document storeDocument(DocComponent... docComponents) {
-        for (DocComponent docComp : docComponents) {
-            document.addDocComponent(docComp);
-        }
-    }*/
+    //== 연==//
 }

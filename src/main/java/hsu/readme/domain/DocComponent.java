@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.print.Doc;
 
 import static javax.persistence.FetchType.*;
 
@@ -20,7 +21,7 @@ public class DocComponent {
     @JoinColumn(name = "document_id")
     private Document document;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "component_id")
     private Component component;
 

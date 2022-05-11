@@ -3,6 +3,7 @@ package hsu.readme.api.document;
 import hsu.readme.domain.component.table.TableContents;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class DocComponentDto {
     private int tableRow;
     private List<String> tableContents;
 
+    public DocComponentDto() {}
     public DocComponentDto(String type, int height, int width, float x, float y, int zIndex, String imgUrl, String iconUrl, String contents, int tableCol, int tableRow, List<String> tableContents) {
         this.type = type;
         this.height = height;

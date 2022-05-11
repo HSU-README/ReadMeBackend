@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,17 +60,31 @@ public class DocumentService {
     * 문서 생성
      */
     @Transactional
-    public Long makeDocument(Long memberId, Long componentId) {
+    public Long makeDocument(Long docId, Long memberId, List<Long> componentIds) {
 
         Member member = memberRepository.findOne(memberId);
-        Component component = componentRepository.findOne(componentId);
 
-        DocComponent docComponent = DocComponent.createDocComponent(component);
+        List<DocComponent> docComponents = new ArrayList<>();
+        for(Long componentId : componentIds) {
+            if(componentId == -1) continue;
+            Component component = componentRepository.findOne(componentId);
+            DocComponent docComponent = DocComponent.createDocComponent(component);
+            docComponents.add(docComponent);
+        }
 
-        Document document = Document.createDocument(member, docComponent);
+        Document document = Document.createDocument(docId, member, docComponents);
 
         documentRepository.save(document);
 
+        return document.getId();
+    }
+
+    /*
+    * 문서 삭제
+    */
+    @Transactional
+    public Long deleteDocument(Document document) {
+        documentRepository.deleteDocument(document);
         return document.getId();
     }
 }

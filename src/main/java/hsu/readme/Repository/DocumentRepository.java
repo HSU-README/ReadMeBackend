@@ -66,4 +66,8 @@ public class DocumentRepository {
                 .setParameter("id", id)
                 .getSingleResult();
     }
+
+    public void deleteDocument(Document document) {
+        em.remove(document);
+    }
 }

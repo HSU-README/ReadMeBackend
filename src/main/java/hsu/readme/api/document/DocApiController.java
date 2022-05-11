@@ -50,4 +50,11 @@ public class DocApiController {
         Document findDoc = documentService.findOne(document.getId());
         return Response.response("S200", DOC_CREATE_SUCCESS, new CreateDocResponse(findDoc.getId()));
     }
+
+    @PostMapping("/api/v1/doc/delete/{docId}")
+    public Response deleteDoc(@PathVariable Long docId) {
+        Document document = documentService.findOne(docId);
+        documentService.deleteDocument(document);
+        return Response.response("S200", DOC_DELETE_SUCCESS, docId);
+    }
 }
