@@ -15,10 +15,10 @@ public class StoreDocDto {
     private String imgUrl;
     private int tableRow;
     private int tableCol;
-    private String contents;
-    private List<String> tableContents;
+    private String textContent;
+    private String tableContent;
 
-    public StoreDocDto(float x, float y, int zIndex, float width, float height, String imgUrl, int tableRow, int tableCol, String contents) {
+    public StoreDocDto(float x, float y, int zIndex, float width, float height, String imgUrl, int tableRow, int tableCol, String textContent, String tableContent) {
         this.x = x;
         this.y = y;
         this.zIndex = zIndex;
@@ -27,7 +27,7 @@ public class StoreDocDto {
         this.imgUrl = imgUrl;
         this.tableRow = tableRow;
         this.tableCol = tableCol;
-        this.contents = contents;
-        tableContents = new ArrayList<>();
+        this.textContent = textContent;
+        this.tableContent = tableContent;
     }
 }
