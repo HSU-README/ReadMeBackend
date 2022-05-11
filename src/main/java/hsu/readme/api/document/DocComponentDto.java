@@ -8,6 +8,7 @@ import java.util.List;
 
 @Getter
 public class DocComponentDto {
+    private Long componentId;
     private String type;
     private int height;
     private int width;
@@ -21,7 +22,8 @@ public class DocComponentDto {
     private int tableRow;
     private List<String> tableContents;
 
-    public DocComponentDto(String type, int height, int width, float x, float y, int zIndex, String imgUrl, String iconUrl, String contents, int tableCol, int tableRow, List<String> tableContents) {
+    public DocComponentDto(Long componentId, String type, int height, int width, float x, float y, int zIndex, String imgUrl, String iconUrl, String contents, int tableCol, int tableRow, List<String> tableContents) {
+        this.componentId = componentId;
         this.type = type;
         this.height = height;
         this.width = width;

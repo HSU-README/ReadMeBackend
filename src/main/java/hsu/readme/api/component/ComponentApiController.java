@@ -16,6 +16,7 @@ import hsu.readme.service.ComponentService;
 import hsu.readme.service.DocumentService;
 import hsu.readme.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,24 +42,26 @@ public class ComponentApiController {
         for (DocComponentDto dto : request.getDocComponentDtos()) {
             String type = dto.getType();
 
+            long componentId = -1;
             switch (type) {
                 case "text":
-                    Long savedTextId = setTextComponent(dto);
-                    documentService.makeDocument(request.getMemberId(), savedTextId);
+                    componentId = setTextComponent(dto.getComponentId(), dto);
                     break;
                 case "image":
-                    Long savedImageId = setImageComponent(dto);
-                    documentService.makeDocument(request.getMemberId(), savedImageId);
+                    componentId = setImageComponent(dto.getComponentId(), dto);
                     break;
                 case "icon":
-                    Long savedIconId = setIconComponent(dto);
-                    documentService.makeDocument(request.getMemberId(), savedIconId);
+                    componentId = setIconComponent(dto.getComponentId(), dto);
                     break;
                 case "table":
-                    Long savedTableId = setTableComponent(dto);
-                    documentService.makeDocument(request.getMemberId(), savedTableId);
+                    componentId = setTableComponent(dto.getComponentId(), dto);
                     break;
+                default:
+                    componentId = 100;
             }
+            documentService.makeDocument(request.getMemberId(), componentId);
+
+
         }
 
         return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(findDoc.getId()));
@@ -72,8 +75,14 @@ public class ComponentApiController {
         component.setHeight(dto.getHeight());
     }
 
-    private Long setTextComponent(DocComponentDto dto) {
-        Text text = new Text();
+    private <T> Long setTextComponent(Long componentId, DocComponentDto dto) {
+        Text text = null;
+        try{
+            text  = (Text)componentService.findOne(componentId);
+        }catch (EmptyResultDataAccessException e){
+            text = new Text();
+        }
+
         setComponent(text, dto);
         text.setContents(dto.getContents());
         componentService.saveComponent(text);
@@ -81,16 +90,27 @@ public class ComponentApiController {
         return text.getId();
     }
 
-    private Long setImageComponent(DocComponentDto dto) {
-        Image image = new Image();
+    private Long setImageComponent(Long componentId, DocComponentDto dto) {
+        Image image = null;
+        try{
+            image  = (Image)componentService.findOne(componentId);
+        }catch (EmptyResultDataAccessException e){
+            image = new Image();
+        }
         setComponent(image, dto);
         image.setImgUrl(dto.getImgUrl());
         componentService.saveComponent(image);
         return image.getId();
     }
 
-    private Long setTableComponent(DocComponentDto dto) {
-        Table table = new Table();
+    private Long setTableComponent(Long componentId, DocComponentDto dto) {
+        Table table = null;
+        try{
+            table  = (Table)componentService.findOne(componentId);
+        }catch (EmptyResultDataAccessException e){
+            table = new Table();
+        }
+
         setComponent(table, dto);
         table.setTableCol(dto.getTableCol());
         table.setTableRow(dto.getTableRow());
@@ -99,8 +119,14 @@ public class ComponentApiController {
         return table.getId();
     }
 
-    private Long setIconComponent(DocComponentDto dto) {
-        Icon icon = new Icon();
+    private Long setIconComponent(Long componentId, DocComponentDto dto) {
+        Icon icon = null;
+        try{
+            icon  = (Icon)componentService.findOne(componentId);
+        }catch (EmptyResultDataAccessException e){
+            icon = new Icon();
+        }
+
         setComponent(icon, dto);
         icon.setIconUrl(dto.getIconUrl());
         componentService.saveComponent(icon);
