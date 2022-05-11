@@ -96,9 +96,8 @@ public class ComponentApiController {
     private Long setTextComponent(DocComponentDto dto) {
         Text text = new Text();
         setComponent(text, dto);
-//        text.setTextContents(dto.getContents());
+        text.setTextContent(dto.getTextContent());
         componentService.saveComponent(text);
-
         return text.getId();
     }
 
@@ -114,9 +113,9 @@ public class ComponentApiController {
     private Long setTableComponent(DocComponentDto dto) {
         Table table = new Table();
         setComponent(table, dto);
-//        table.setTableCol(dto.getTableCol());
-//        table.setTableRow(dto.getTableRow());
-//        table.setTableContents(dto.getContents());
+        table.setTableCol(dto.getTableCol());
+        table.setTableRow(dto.getTableRow());
+        table.setTableContent(dto.getTableContent());
         componentService.saveComponent(table);
         return table.getId();
     }

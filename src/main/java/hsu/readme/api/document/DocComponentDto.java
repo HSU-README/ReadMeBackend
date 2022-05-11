@@ -17,10 +17,10 @@ public class DocComponentDto {
     private int width;
     private String imgUrl;
     private String iconUrl;
-    private String textContents;
+    private String textContent;
     private int tableCol;
     private int tableRow;
-    private String tableContents;
+    private String tableContent;
 
     public DocComponentDto() {}
     public DocComponentDto(DocComponent docComponent) {
@@ -31,7 +31,7 @@ public class DocComponentDto {
         this.y = docComponent.getComponent().getY();
         this.zIndex = docComponent.getComponent().getZIndex();
         if(docComponent.getComponent() instanceof Text) {
-            this.textContents = ((Text)docComponent.getComponent()).getTextContents();
+            this.textContent = ((Text)docComponent.getComponent()).getTextContent();
         } else if (docComponent.getComponent() instanceof Image) {
             this.imgUrl = ((Image)docComponent.getComponent()).getImgUrl();
         } else if (docComponent.getComponent() instanceof Icon) {
@@ -39,7 +39,7 @@ public class DocComponentDto {
         } else if (docComponent.getComponent() instanceof Table) {
             this.tableCol = ((Table)docComponent.getComponent()).getTableCol();
             this.tableRow = ((Table)docComponent.getComponent()).getTableRow();
-            this.tableContents = ((Table)docComponent.getComponent()).getTableContents();
+            this.tableContent = ((Table)docComponent.getComponent()).getTableContent();
         }
     }
 }

@@ -11,5 +11,5 @@ import javax.persistence.Entity;
 @Setter
 @DiscriminatorValue("text")
 public class Text extends Component{
-    private String textContents;
+    private String textContent;
 }

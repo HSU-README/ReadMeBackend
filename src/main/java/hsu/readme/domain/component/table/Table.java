@@ -13,5 +13,5 @@ import javax.persistence.Entity;
 public class Table extends Component {
     private int tableCol;
     private int tableRow;
-    private String tableContents;
+    private String tableContent;
 }
