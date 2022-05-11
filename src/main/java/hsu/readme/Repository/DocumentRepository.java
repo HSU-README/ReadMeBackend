@@ -70,4 +70,15 @@ public class DocumentRepository {
     public void deleteDocument(Document document) {
         em.remove(document);
     }
+
+    public Document findDocumentInfo(Long docId) {
+        return em.createQuery("select d from Document d " +
+                " join fetch d.member m " +
+//                " left join fetch d.tags t " +
+                " join fetch d.docComponents dc " +
+                " join fetch dc.component c " +
+                " where d.id = :id", Document.class)
+                .setParameter("id", docId)
+                .getSingleResult();
+    }
 }

@@ -3,6 +3,7 @@ package hsu.readme.service;
 import hsu.readme.Repository.ComponentRepository;
 import hsu.readme.Repository.DocumentRepository;
 import hsu.readme.Repository.MemberRepository;
+import hsu.readme.api.component.DocInfoDto;
 import hsu.readme.domain.DocComponent;
 import hsu.readme.domain.Document;
 import hsu.readme.domain.Member;
@@ -56,6 +57,13 @@ public class DocumentService {
         return documentRepository.findWithMember(docId);
     }
 
+    public DocInfoDto findDocumentInfo(Long docId) {
+        Document documentInfo = documentRepository.findDocumentInfo(docId);
+
+        DocInfoDto docInfoDto = new DocInfoDto(documentInfo);
+
+        return docInfoDto;
+    }
     /*
     * 문서 생성
      */

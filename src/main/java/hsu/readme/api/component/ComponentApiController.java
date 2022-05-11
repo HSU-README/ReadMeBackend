@@ -2,12 +2,10 @@ package hsu.readme.api.component;
 
 import hsu.readme.api.Response;
 import hsu.readme.api.document.DocComponentDto;
-import hsu.readme.api.document.DocInfoDto;
+import hsu.readme.api.document.DocInfoDto_legacy;
 import hsu.readme.api.document.StoreDocRequest;
 import hsu.readme.api.document.StoreDocResponse;
-import hsu.readme.domain.DocComponent;
 import hsu.readme.domain.Document;
-import hsu.readme.domain.Member;
 import hsu.readme.domain.component.Component;
 import hsu.readme.domain.component.Icon;
 import hsu.readme.domain.component.Image;
@@ -18,10 +16,7 @@ import hsu.readme.service.DocumentService;
 import hsu.readme.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -39,13 +34,22 @@ public class ComponentApiController {
     private final DocumentService documentService;
     private final ComponentService componentService;
 
+    @GetMapping("/api/v1/doc/{id}")
+    public Response docInfoV1(@PathVariable Long id) {
+       DocInfoDto documentInfo = documentService.findDocumentInfo(id);
 
+        return Response.response("S200", DOC_INFO_SUCCESS, documentInfo);
+    }
 
     @PostMapping("/api/v1/doc/edit/{docId}")
     public Response storeDocComponent(@PathVariable Long docId, @RequestBody @Valid StoreDocRequest request) {
 
-        Document document = documentService.findOne(docId);
-        documentService.deleteDocument(document);
+        try {
+            Document document = documentService.findOne(docId);
+            documentService.deleteDocument(document);
+        } catch (Exception e){
+
+        }
 
         List<Long> componentIds = new ArrayList<>();
         for (DocComponentDto dto : request.getDocComponentDtos()) {
@@ -69,12 +73,13 @@ public class ComponentApiController {
             componentIds.add(componentId);
         }
 
-        documentService.makeDocument(docId, request.getMemberId(), componentIds);
+        Long docSavedId = documentService.makeDocument(docId, request.getMemberId(), componentIds);
 
-        return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docId));
+        return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docSavedId));
     }
 
     private void setComponent(Component component, DocComponentDto dto) {
+        component.setType(dto.getType());
         component.setX(dto.getX());
         component.setY(dto.getY());
         component.setZIndex(dto.getZIndex());

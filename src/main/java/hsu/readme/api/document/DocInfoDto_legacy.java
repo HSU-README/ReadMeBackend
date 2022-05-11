@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class DocInfoDto {
+public class DocInfoDto_legacy {
     private Long id;
     private String title;
     private String docUrl;
     private String designer;
     private List<String> tags;
 
-    public DocInfoDto(Document document){
+    public DocInfoDto_legacy(Document document){
         this.id = document.getId();
         this.title = document.getTitle();
         this.docUrl = "https://testUrl.com";

@@ -4,15 +4,12 @@ import hsu.readme.api.Response;
 import hsu.readme.domain.Document;
 import hsu.readme.service.DocumentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static hsu.readme.api.ResponseMessage.DOC_CREATE_SUCCESS;
-import static hsu.readme.api.ResponseMessage.DOC_INFO_SUCCESS;
+import static hsu.readme.api.ResponseMessage.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,21 +20,17 @@ public class DocApiController {
     @GetMapping("/api/v1/doc/{id}/preview")
     public Response docPreviewV1(@PathVariable Long id) { //doc id 보내줌
         Document document = documentService.findDocumentWithMember(id);
-        return Response.response("S200", DOC_INFO_SUCCESS, new DocInfoDto(document));
+        return Response.response("S200", DOC_INFO_SUCCESS, new DocInfoDto_legacy(document));
     }
 
-    @GetMapping("/api/v1/doc/{id}")
-    public Response docInfoV1(@PathVariable Long id) {
-        Document document = documentService.findDocumentWithMember(id);
-        return Response.response("S200", DOC_INFO_SUCCESS, new DocInfoDto(document));
-    }
+
 
     @GetMapping("/api/v1/docall")
     public Response docInfoV1() {
         List<Document> findDocuments = documentService.findDocuments();
 
-        List<DocInfoDto> docs = findDocuments.stream()
-                .map(DocInfoDto::new)
+        List<DocInfoDto_legacy> docs = findDocuments.stream()
+                .map(DocInfoDto_legacy::new)
                 .collect(Collectors.toList());
         return Response.response("S200", DOC_INFO_SUCCESS, docs);
     }
