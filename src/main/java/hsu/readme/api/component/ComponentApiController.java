@@ -73,7 +73,7 @@ public class ComponentApiController {
             componentIds.add(componentId);
         }
 
-        Long docSavedId = documentService.makeDocument(request.getDocId(), request.getMemberId(), componentIds);
+        Long docSavedId = documentService.makeDocument(request.getDocId(), request.getMemberId(), request.getTitle(), componentIds);
 
         return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docSavedId));
     }

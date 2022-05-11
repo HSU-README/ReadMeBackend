@@ -56,9 +56,10 @@ public class Document {
     }
 
     //== 생성 메서드 ==//
-    public static Document createDocument(Long docId, Member member, List<DocComponent> docComponents) {
+    public static Document createDocument(Long docId, Member member, String title, List<DocComponent> docComponents) {
         Document document = new Document();
         document.setMember(member);
+        document.setTitle(title);
         for (DocComponent docComp : docComponents) {
             document.addDocComponent(docComp);
         }
@@ -66,5 +67,4 @@ public class Document {
         return document;
     }
 
-    //== 연==//
 }

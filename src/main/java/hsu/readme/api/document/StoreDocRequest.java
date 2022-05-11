@@ -11,13 +11,16 @@ public class StoreDocRequest {
 
     private Long docId;
     private Long memberId;
+    private String title;
+
     @JsonProperty("components")
     private List<DocComponentDto> docComponentDtos;
 
     public StoreDocRequest() {}
-    public StoreDocRequest(Long docId, Long memberId, List<DocComponentDto> docComponentDtos) {
+    public StoreDocRequest(Long docId, Long memberId, String title, List<DocComponentDto> docComponentDtos) {
         this.docId = docId;
         this.memberId = memberId;
+        this.title = title;
         this.docComponentDtos = docComponentDtos;
     }
 }

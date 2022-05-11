@@ -68,7 +68,7 @@ public class DocumentService {
     * 문서 생성
      */
     @Transactional
-    public Long makeDocument(Long docId, Long memberId, List<Long> componentIds) {
+    public Long makeDocument(Long docId, Long memberId, String title, List<Long> componentIds) {
 
         Member member = memberRepository.findOne(memberId);
 
@@ -80,7 +80,7 @@ public class DocumentService {
             docComponents.add(docComponent);
         }
 
-        Document document = Document.createDocument(docId, member, docComponents);
+        Document document = Document.createDocument(docId, member, title, docComponents);
 
         documentRepository.save(document);
 
