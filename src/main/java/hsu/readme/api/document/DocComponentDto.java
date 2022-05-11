@@ -7,9 +7,6 @@ import hsu.readme.domain.component.Text;
 import hsu.readme.domain.component.table.Table;
 import lombok.Getter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Getter
 public class DocComponentDto {
     private String type;
@@ -20,7 +17,7 @@ public class DocComponentDto {
     private int width;
     private String imgUrl;
     private String iconUrl;
-    private String contents;
+    private String textContents;
     private int tableCol;
     private int tableRow;
     private String tableContents;
@@ -34,7 +31,7 @@ public class DocComponentDto {
         this.y = docComponent.getComponent().getY();
         this.zIndex = docComponent.getComponent().getZIndex();
         if(docComponent.getComponent() instanceof Text) {
-            this.contents = ((Text)docComponent.getComponent()).getTextContents();
+            this.textContents = ((Text)docComponent.getComponent()).getTextContents();
         } else if (docComponent.getComponent() instanceof Image) {
             this.imgUrl = ((Image)docComponent.getComponent()).getImgUrl();
         } else if (docComponent.getComponent() instanceof Icon) {
