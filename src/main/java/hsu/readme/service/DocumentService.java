@@ -72,9 +72,4 @@ public class DocumentService {
 
         return document.getId();
     }
-
-    @Transactional
-    public Long storeDocument(Long documentId, Long componentId) {
-
-    }
 }

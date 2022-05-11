@@ -45,16 +45,16 @@ public class ComponentApiController {
             long componentId = -1;
             switch (type) {
                 case "text":
-                    componentId = setTextComponent(dto.getComponentId(), dto);
+                    componentId = setTextComponent(dto);
                     break;
                 case "image":
-                    componentId = setImageComponent(dto.getComponentId(), dto);
+                    componentId = setImageComponent(dto);
                     break;
                 case "icon":
-                    componentId = setIconComponent(dto.getComponentId(), dto);
+                    componentId = setIconComponent(dto);
                     break;
                 case "table":
-                    componentId = setTableComponent(dto.getComponentId(), dto);
+                    componentId = setTableComponent(dto);
                     break;
                 default:
                     componentId = 100;
@@ -75,14 +75,8 @@ public class ComponentApiController {
         component.setHeight(dto.getHeight());
     }
 
-    private <T> Long setTextComponent(Long componentId, DocComponentDto dto) {
-        Text text = null;
-        try{
-            text  = (Text)componentService.findOne(componentId);
-        }catch (EmptyResultDataAccessException e){
-            text = new Text();
-        }
-
+    private <T> Long setTextComponent(DocComponentDto dto) {
+        Text text = new Text();
         setComponent(text, dto);
         text.setContents(dto.getContents());
         componentService.saveComponent(text);
@@ -90,27 +84,17 @@ public class ComponentApiController {
         return text.getId();
     }
 
-    private Long setImageComponent(Long componentId, DocComponentDto dto) {
-        Image image = null;
-        try{
-            image  = (Image)componentService.findOne(componentId);
-        }catch (EmptyResultDataAccessException e){
-            image = new Image();
-        }
+    private Long setImageComponent(DocComponentDto dto) {
+        Image image = new Image();
+
         setComponent(image, dto);
         image.setImgUrl(dto.getImgUrl());
         componentService.saveComponent(image);
         return image.getId();
     }
 
-    private Long setTableComponent(Long componentId, DocComponentDto dto) {
-        Table table = null;
-        try{
-            table  = (Table)componentService.findOne(componentId);
-        }catch (EmptyResultDataAccessException e){
-            table = new Table();
-        }
-
+    private Long setTableComponent(DocComponentDto dto) {
+        Table table = new Table();
         setComponent(table, dto);
         table.setTableCol(dto.getTableCol());
         table.setTableRow(dto.getTableRow());
@@ -119,14 +103,8 @@ public class ComponentApiController {
         return table.getId();
     }
 
-    private Long setIconComponent(Long componentId, DocComponentDto dto) {
-        Icon icon = null;
-        try{
-            icon  = (Icon)componentService.findOne(componentId);
-        }catch (EmptyResultDataAccessException e){
-            icon = new Icon();
-        }
-
+    private Long setIconComponent(DocComponentDto dto) {
+        Icon icon = new Icon();
         setComponent(icon, dto);
         icon.setIconUrl(dto.getIconUrl());
         componentService.saveComponent(icon);
