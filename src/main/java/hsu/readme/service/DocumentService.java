@@ -57,6 +57,10 @@ public class DocumentService {
         return documentRepository.findWithMember(docId);
     }
 
+    public List<Document> findMemberDocs(Long memberId) {
+        return documentRepository.findMemberDocs(memberId);
+    }
+
     public DocInfoDto findDocumentInfo(Long docId) {
         Document documentInfo = documentRepository.findDocumentInfo(docId);
 

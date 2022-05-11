@@ -1,6 +1,7 @@
 package hsu.readme.api.document;
 
 import hsu.readme.api.Response;
+import hsu.readme.api.component.DocInfoDto;
 import hsu.readme.domain.Document;
 import hsu.readme.service.DocumentService;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,20 @@ public class DocApiController {
     private final DocumentService documentService;
 
     @GetMapping("/api/v1/doc/{id}/preview")
-    public Response docPreviewV1(@PathVariable Long id) { //doc id 보내줌
+    public Response docPreviewV1(@PathVariable Long id) {
         Document document = documentService.findDocumentWithMember(id);
-        return Response.response("S200", DOC_INFO_SUCCESS, new DocInfoDto_legacy(document));
+        return Response.response("S200", DOC_INFO_SUCCESS, new DocInfoDto(document));
     }
 
+    @GetMapping("/api/v1/user/{memberId}/docs")
+    public Response userDocsV1(@PathVariable Long memberId) {
+        List<Document> memberDocs = documentService.findMemberDocs(memberId);
 
+        List<MemberDocsDto> docs = memberDocs.stream()
+                .map(MemberDocsDto::new)
+                .collect(Collectors.toList());
+        return Response.response("S200", DOC_INFO_SUCCESS, docs);
+    }
 
     @GetMapping("/api/v1/docall")
     public Response docInfoV1() {

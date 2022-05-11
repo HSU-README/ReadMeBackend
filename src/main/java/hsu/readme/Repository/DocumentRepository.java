@@ -81,4 +81,12 @@ public class DocumentRepository {
                 .setParameter("id", docId)
                 .getSingleResult();
     }
+
+    public List<Document> findMemberDocs(Long memberId) {
+        return em.createQuery("select d from Document d " +
+                " join fetch d.member m " +
+                " where m.id = :id", Document.class)
+                .setParameter("id", memberId)
+                .getResultList();
+    }
 }

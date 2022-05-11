@@ -6,11 +6,14 @@ import hsu.readme.api.document.DocInfoDto_legacy;
 import hsu.readme.api.document.StoreDocRequest;
 import hsu.readme.api.document.StoreDocResponse;
 import hsu.readme.domain.Document;
+import hsu.readme.domain.Member;
 import hsu.readme.domain.component.Component;
 import hsu.readme.domain.component.Icon;
 import hsu.readme.domain.component.Image;
 import hsu.readme.domain.component.Text;
 import hsu.readme.domain.component.table.Table;
+import hsu.readme.exception.ApiException;
+import hsu.readme.exception.ExceptionEnum;
 import hsu.readme.service.ComponentService;
 import hsu.readme.service.DocumentService;
 import hsu.readme.service.MemberService;
@@ -49,6 +52,12 @@ public class ComponentApiController {
             documentService.deleteDocument(document);
         } catch (Exception e){
 
+        }
+
+        try{
+            Member findMember = memberService.findOne(request.getMemberId());
+        }catch (Exception e) {
+            throw new ApiException(ExceptionEnum.USER_NOT_EXIST_EXCEPTION);
         }
 
         List<Long> componentIds = new ArrayList<>();

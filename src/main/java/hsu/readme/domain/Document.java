@@ -45,7 +45,7 @@ public class Document {
     private DocumentStatus status;
 
     //== 연관관계 메서드 == //
-    public void setMember(Member member) {
+    public void setMember(Member member, Long docId) {
         this.member = member;
         member.getDocuments().add(this);
     }
@@ -53,6 +53,10 @@ public class Document {
     public void addDocComponent(DocComponent docComponent) {
         docComponents.add(docComponent);
         docComponent.setDocument(this);
+    }
+
+    public void removeMember() {
+        this.member.getDocuments().remove(this);
     }
 
     //== 생성 메서드 ==//
@@ -66,5 +70,4 @@ public class Document {
         document.setDocumentDate(LocalDateTime.now());
         return document;
     }
-
 }
