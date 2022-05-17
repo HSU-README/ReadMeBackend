@@ -11,11 +11,13 @@ import hsu.readme.domain.component.Icon;
 import hsu.readme.domain.component.Image;
 import hsu.readme.domain.component.Text;
 import hsu.readme.domain.component.table.Table;
+import hsu.readme.domain.component.table.TableContent;
 import hsu.readme.exception.ApiException;
 import hsu.readme.exception.ExceptionEnum;
 import hsu.readme.service.ComponentService;
 import hsu.readme.service.DocumentService;
 import hsu.readme.service.MemberService;
+import hsu.readme.service.TableContentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,7 @@ public class ComponentApiController {
     private final MemberService memberService;
     private final DocumentService documentService;
     private final ComponentService componentService;
+    private final TableContentService tableContentService;
 
     @GetMapping("/api/v1/doc/{id}")
     public Response docInfoV1(@PathVariable Long id) {
@@ -115,8 +118,14 @@ public class ComponentApiController {
         setComponent(table, dto);
         table.setTableCol(dto.getTableCol());
         table.setTableRow(dto.getTableRow());
-        table.setTableContent(dto.getTableContent());
         componentService.saveComponent(table);
+        Component findTable = componentService.findOne(table.getId());
+
+        for(TableContentDto tcDto : dto.getTableContentDtos()){
+            TableContent tableContent = TableContent.createTableContent(findTable, tcDto);
+            tableContentService.saveTableContent(tableContent);
+        }
+
         return table.getId();
     }
 

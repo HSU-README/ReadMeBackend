@@ -23,4 +23,5 @@ public class Component {
     private float x;
     private float y;
     private int zIndex;
+
 }
