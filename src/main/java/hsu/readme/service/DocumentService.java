@@ -61,12 +61,10 @@ public class DocumentService {
         return documentRepository.findMemberDocs(memberId);
     }
 
-    public DocInfoDto findDocumentInfo(Long docId) {
+    public Document findDocumentInfo(Long docId) {
         Document documentInfo = documentRepository.findDocumentInfo(docId);
 
-        DocInfoDto docInfoDto = new DocInfoDto(documentInfo);
-
-        return docInfoDto;
+        return documentInfo;
     }
     /*
     * 문서 생성

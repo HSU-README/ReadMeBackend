@@ -5,6 +5,7 @@ import hsu.readme.api.document.DocComponentDto;
 import hsu.readme.api.document.StoreDocRequest;
 import hsu.readme.api.document.StoreDocResponse;
 import hsu.readme.domain.Document;
+import hsu.readme.domain.Like;
 import hsu.readme.domain.Member;
 import hsu.readme.domain.component.Component;
 import hsu.readme.domain.component.Icon;
@@ -14,10 +15,7 @@ import hsu.readme.domain.component.table.Table;
 import hsu.readme.domain.component.table.TableContent;
 import hsu.readme.exception.ApiException;
 import hsu.readme.exception.ExceptionEnum;
-import hsu.readme.service.ComponentService;
-import hsu.readme.service.DocumentService;
-import hsu.readme.service.MemberService;
-import hsu.readme.service.TableContentService;
+import hsu.readme.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,12 +34,17 @@ public class ComponentApiController {
     private final DocumentService documentService;
     private final ComponentService componentService;
     private final TableContentService tableContentService;
+    private final LikeService likeService;
 
     @GetMapping("/api/v1/doc/{id}")
     public Response docInfoV1(@PathVariable Long id) {
-       DocInfoDto documentInfo = documentService.findDocumentInfo(id);
-
-        return Response.response("S200", DOC_INFO_SUCCESS, documentInfo);
+        Document document = documentService.findDocumentInfo(id);
+        List<Like> likes = likeService.findWithDoc(document);
+        for(Like like : likes) {
+            System.out.println(like.getId() + " " + like.getMember().getName() + " " + like.getDocument().getTitle());
+        }
+        DocInfoDto docInfoDto = new DocInfoDto(document, likes);
+        return Response.response("S200", DOC_INFO_SUCCESS, docInfoDto);
     }
 
     @PostMapping("/api/v1/doc/edit")

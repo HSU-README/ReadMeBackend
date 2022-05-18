@@ -29,6 +29,9 @@ public class Document {
 
     private String title;
 
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+    private List<Like> likes;
+
     private int likeCnt;
 
     private LocalDateTime documentDate;
