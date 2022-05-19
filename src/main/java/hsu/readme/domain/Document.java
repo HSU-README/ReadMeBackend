@@ -58,17 +58,34 @@ public class Document {
         docComponent.setDocument(this);
     }
 
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.setDocument(this);
+    }
+
     public void removeMember() {
         this.member.getDocuments().remove(this);
     }
 
     //== 생성 메서드 ==//
-    public static Document createDocument(Long docId, Member member, String title, List<DocComponent> docComponents) {
+    public static Document createDocument(Long docId, Member member, String title, String docUrl, String visibility, List<Tag> tags,  List<DocComponent> docComponents) {
         Document document = new Document();
         document.setMember(member);
         document.setTitle(title);
+        document.setDocUrl(docUrl);
+
+        for(Tag tag : tags) {
+            document.addTag(tag);
+        }
         for (DocComponent docComp : docComponents) {
             document.addDocComponent(docComp);
+        }
+
+        if(visibility.equals("public")) {
+            document.setVisibility(DocumentVisibility.PUBLIC);
+        } else {
+            document.setVisibility(DocumentVisibility.PRIVATE);
         }
         document.setDocumentDate(LocalDateTime.now());
         return document;

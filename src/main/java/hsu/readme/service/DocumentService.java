@@ -3,10 +3,12 @@ package hsu.readme.service;
 import hsu.readme.Repository.ComponentRepository;
 import hsu.readme.Repository.DocumentRepository;
 import hsu.readme.Repository.MemberRepository;
+import hsu.readme.Repository.TagRepository;
 import hsu.readme.api.component.DocInfoDto;
 import hsu.readme.domain.DocComponent;
 import hsu.readme.domain.Document;
 import hsu.readme.domain.Member;
+import hsu.readme.domain.Tag;
 import hsu.readme.domain.component.Component;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class DocumentService {
     private final MemberRepository memberRepository;
     private final DocumentRepository documentRepository;
     private final ComponentRepository componentRepository;
+    private final TagRepository tagRepository;
 
     //문서 작성
     @Transactional
@@ -70,7 +73,7 @@ public class DocumentService {
     * 문서 생성
      */
     @Transactional
-    public Long makeDocument(Long docId, Long memberId, String title, List<Long> componentIds) {
+    public Long makeDocument(Long docId, Long memberId, String title, String docUrl, String visibility, List<Long> tagIds, List<Long> componentIds) {
 
         Member member = memberRepository.findOne(memberId);
 
@@ -82,7 +85,13 @@ public class DocumentService {
             docComponents.add(docComponent);
         }
 
-        Document document = Document.createDocument(docId, member, title, docComponents);
+        List<Tag> tags = new ArrayList<>();
+        for(Long tagId : tagIds) {
+            Tag tag = tagRepository.findOne(tagId);
+            tags.add(tag);
+        }
+
+        Document document = Document.createDocument(docId, member, title, docUrl, visibility, tags, docComponents);
 
         documentRepository.save(document);
 

@@ -1,12 +1,10 @@
 package hsu.readme.api.component;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import hsu.readme.api.Tag.DocumentTagDto;
 import hsu.readme.api.document.DocComponentDto;
 import hsu.readme.api.document.LikeDto;
-import hsu.readme.domain.DocComponent;
-import hsu.readme.domain.Document;
-import hsu.readme.domain.DocumentStatus;
-import hsu.readme.domain.Like;
+import hsu.readme.domain.*;
 import lombok.Data;
 import lombok.Getter;
 
@@ -19,7 +17,8 @@ public class DocInfoDto {
     private Long docId;
     private String title;
     private LocalDateTime docDate;
-    private DocumentStatus docStatus;
+    private DocumentVisibility visibility;
+    private List<DocumentTagDto> tags;
     private List<LikeDto> likes;
     private int likeCnt;
     private String docUrl;
@@ -31,8 +30,9 @@ public class DocInfoDto {
         this.docId = document.getId();
         this.title = document.getTitle();
         this.docDate = document.getDocumentDate();
-        this.docStatus = document.getStatus();
+        this.visibility = document.getVisibility();
         this.likes = likes.stream().map(LikeDto::new).collect(Collectors.toList());
+        this.tags = document.getTags().stream().map(DocumentTagDto::new).collect(Collectors.toList());
         this.likeCnt = likes.size();
         this.docUrl = document.getDocUrl();
         this.designer = document.getMember().getName();

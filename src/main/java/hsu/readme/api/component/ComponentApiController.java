@@ -7,6 +7,7 @@ import hsu.readme.api.document.StoreDocResponse;
 import hsu.readme.domain.Document;
 import hsu.readme.domain.Like;
 import hsu.readme.domain.Member;
+import hsu.readme.domain.Tag;
 import hsu.readme.domain.component.Component;
 import hsu.readme.domain.component.Icon;
 import hsu.readme.domain.component.Image;
@@ -35,14 +36,12 @@ public class ComponentApiController {
     private final ComponentService componentService;
     private final TableContentService tableContentService;
     private final LikeService likeService;
+    private final TagService tagService;
 
     @GetMapping("/api/v1/doc/{id}")
     public Response docInfoV1(@PathVariable Long id) {
         Document document = documentService.findDocumentInfo(id);
         List<Like> likes = likeService.findWithDoc(document);
-        for(Like like : likes) {
-            System.out.println(like.getId() + " " + like.getMember().getName() + " " + like.getDocument().getTitle());
-        }
         DocInfoDto docInfoDto = new DocInfoDto(document, likes);
         return Response.response("S200", DOC_INFO_SUCCESS, docInfoDto);
     }
@@ -85,7 +84,15 @@ public class ComponentApiController {
             componentIds.add(componentId);
         }
 
-        Long docSavedId = documentService.makeDocument(request.getDocId(), request.getMemberId(), request.getTitle(), componentIds);
+        List<Long> tagIds = new ArrayList<>();
+        for(String name : request.getTags()) {
+            Tag tag = new Tag();
+            tag.setName(name);
+            tagService.join(tag);
+            tagIds.add(tag.getId());
+        }
+
+        Long docSavedId = documentService.makeDocument(request.getDocId(), request.getMemberId(), request.getTitle(), request.getDocUrl(), request.getVisibility(),tagIds, componentIds);
 
         return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docSavedId));
     }
