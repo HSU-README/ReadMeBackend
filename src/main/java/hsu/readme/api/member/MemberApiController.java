@@ -3,6 +3,7 @@ package hsu.readme.api.member;
 import hsu.readme.api.Response;
 import hsu.readme.api.component.DocInfoDto;
 import hsu.readme.api.document.DocPreviewInfoDto;
+import hsu.readme.api.document.MemberDocsDto;
 import hsu.readme.domain.Document;
 import hsu.readme.domain.Member;
 import hsu.readme.service.DocumentService;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static hsu.readme.api.ResponseMessage.*;
 
@@ -24,7 +26,8 @@ public class MemberApiController {
     private final MemberService memberService;
     private final DocumentService documentService;
 
-    @PostMapping("/api/v1/members/new")
+    //회원가입
+    @PostMapping("/api/v1/member/new")
     @ResponseBody
     public Response saveMemberV1(@RequestBody @Valid CreateMemberRequest request){
         Member member = new Member();
@@ -40,7 +43,8 @@ public class MemberApiController {
         return Response.response("S200", CREATED_USER, new MemberResult(savedId));
     }
 
-    @PostMapping("/api/v1/members/login")
+    //로그인
+    @PostMapping("/api/v1/member/login")
     @ResponseBody
     public Response loginMemberV1(@RequestBody @Valid LoginMemberRequest request){
         Long savedId = memberService.login(request.getEmail(), request.getPassword());
@@ -48,14 +52,16 @@ public class MemberApiController {
         return Response.response("S200", LOGIN_SUCCESS, new LoginMemberResult(savedId, member.getName(), member.getMajor()));
     }
 
-    @GetMapping("/api/v1/members/{id}")
+    //마이페이지 조회
+    @GetMapping("/api/v1/member/{id}")
     public Response memberInfoV1(@PathVariable Long id){
         Member member = memberService.findOne(id);
         return Response.response("S200", MEMBER_INFO_SUCCESS,
                 new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests()));
     }
 
-    @PutMapping("/api/v1/members/{id}")
+    //마이페이지 수정
+    @PutMapping("/api/v1/member/{id}")
     public Response putMemberInfoV1(@PathVariable Long id, @RequestBody @Valid PutMemberRequest request){
         memberService.update(id, request.getName(), request.getProfileUrl(), request.getUniversity(), request.getMajor(), request.getInterests());
         Member member = memberService.findOne(id);
@@ -63,6 +69,18 @@ public class MemberApiController {
                 new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests()));
     }
 
+    //유저의 문서들 불러오기
+    @GetMapping("/api/v1/member/{memberId}/docs")
+    public Response memberDocsV1(@PathVariable Long memberId) {
+        List<Document> memberDocs = documentService.findMemberDocs(memberId);
+
+        List<MemberDocsDto> docs = memberDocs.stream()
+                .map(MemberDocsDto::new)
+                .collect(Collectors.toList());
+        return Response.response("S200", DOC_INFO_SUCCESS, docs);
+    }
+
+    //유저가 좋아요 누른 문서들 불러오기
     @GetMapping("/api/v1/member/{id}/docs/like")
     public Response getMemberLikeDocsV1(@PathVariable Long id) {
         List<Document> docs = documentService.findDocsWithMemberLikes(id);

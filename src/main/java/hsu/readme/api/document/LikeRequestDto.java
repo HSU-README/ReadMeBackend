@@ -5,13 +5,11 @@ import lombok.Getter;
 @Getter
 public class LikeRequestDto {
 
-    private Long docId;
     private Long memberId;
 
     public LikeRequestDto() { }
 
-    public LikeRequestDto(Long docId, Long memberId) {
-        this.docId = docId;
+    public LikeRequestDto(Long memberId) {
         this.memberId = memberId;
     }
 }
