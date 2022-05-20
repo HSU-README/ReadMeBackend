@@ -69,7 +69,7 @@ public class Document {
     }
 
     //== 생성 메서드 ==//
-    public static Document createDocument(Long docId, Member member, String title, String docUrl, String visibility, List<Tag> tags,  List<DocComponent> docComponents) {
+    public static Document createDocument(Member member, String title, String docUrl, String visibility, List<Tag> tags,  List<DocComponent> docComponents) {
         Document document = new Document();
         document.setMember(member);
         document.setTitle(title);

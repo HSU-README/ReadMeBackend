@@ -1,9 +1,6 @@
 package hsu.readme.service;
 
-import hsu.readme.Repository.ComponentRepository;
-import hsu.readme.Repository.DocumentRepository;
-import hsu.readme.Repository.MemberRepository;
-import hsu.readme.Repository.TagRepository;
+import hsu.readme.Repository.*;
 import hsu.readme.api.component.DocInfoDto;
 import hsu.readme.domain.DocComponent;
 import hsu.readme.domain.Document;
@@ -25,6 +22,7 @@ public class DocumentService {
     private final MemberRepository memberRepository;
     private final DocumentRepository documentRepository;
     private final ComponentRepository componentRepository;
+    private final DocComponentRepository docComponentRepository;
     private final TagRepository tagRepository;
 
     //문서 작성
@@ -78,10 +76,53 @@ public class DocumentService {
     * 문서 생성
      */
     @Transactional
-    public Long makeDocument(Long docId, Long memberId, String title, String docUrl, String visibility, List<Long> tagIds, List<Long> componentIds) {
+    public Long makeDocument(Long memberId, String title, String docUrl, String visibility, List<Long> tagIds, List<Long> componentIds) {
 
         Member member = memberRepository.findOne(memberId);
 
+
+        List<DocComponent> docComponents = createDocComponents(componentIds);
+
+        List<Tag> tags = createTags(tagIds);
+
+        Document document = Document.createDocument(member, title, docUrl, visibility, tags, docComponents);
+
+        documentRepository.save(document);
+
+        return document.getId();
+    }
+
+    @Transactional
+    public Long editDocument(Long docId, String title, String docUrl, String visibility, List<Long> tagIds, List<Long> componentIds) {
+        Document document = documentRepository.findOne(docId);
+        document.getDocComponents().clear();
+        document.getTags().clear();
+        List<DocComponent> docComponents = createDocComponents(componentIds);
+
+        List<Tag> tags = createTags(tagIds);
+
+        for(DocComponent docComponent : docComponents) {
+            document.getDocComponents().add(docComponent);
+            docComponent.setDocument(document);
+        }
+
+        for(Tag tag : tags) {
+            document.getTags().add(tag);
+            tag.setDocument(document);
+        }
+        return document.getId();
+    }
+
+    private List<Tag> createTags(List<Long> tagIds) {
+        List<Tag> tags = new ArrayList<>();
+        for(Long tagId : tagIds) {
+            Tag tag = tagRepository.findOne(tagId);
+            tags.add(tag);
+        }
+        return tags;
+    }
+
+    private List<DocComponent> createDocComponents(List<Long> componentIds) {
         List<DocComponent> docComponents = new ArrayList<>();
         for(Long componentId : componentIds) {
             if(componentId == -1) continue;
@@ -89,19 +130,10 @@ public class DocumentService {
             DocComponent docComponent = DocComponent.createDocComponent(component);
             docComponents.add(docComponent);
         }
-
-        List<Tag> tags = new ArrayList<>();
-        for(Long tagId : tagIds) {
-            Tag tag = tagRepository.findOne(tagId);
-            tags.add(tag);
-        }
-
-        Document document = Document.createDocument(docId, member, title, docUrl, visibility, tags, docComponents);
-
-        documentRepository.save(document);
-
-        return document.getId();
+        return docComponents;
     }
+
+
 
     /*
     * 문서 삭제
@@ -111,4 +143,6 @@ public class DocumentService {
         documentRepository.deleteDocument(document);
         return document.getId();
     }
+
+
 }

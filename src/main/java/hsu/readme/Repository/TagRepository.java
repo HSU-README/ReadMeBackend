@@ -19,4 +19,8 @@ public class TagRepository {
     public Tag findOne(Long id){
         return em.find(Tag.class, id);
     }
+
+    public void remove(Tag tag) {
+        em.remove(tag);
+    }
 }

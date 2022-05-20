@@ -2,7 +2,6 @@ package hsu.readme.service;
 
 import hsu.readme.Repository.TagRepository;
 import hsu.readme.domain.Tag;
-import hsu.readme.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,5 +26,11 @@ public class TagService {
     public Tag findOne(Long tagId){
         Tag tag = tagRepository.findOne(tagId);
         return tag;
+    }
+
+    @Transactional
+    public Long deleteTag(Tag tag) {
+        tagRepository.remove(tag);
+        return tag.getId();
     }
 }

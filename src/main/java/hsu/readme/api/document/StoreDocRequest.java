@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 
 @Getter
 public class StoreDocRequest {
-
-    private String type;
     private Long docId;
     private Long memberId;
     private String title;
@@ -23,9 +21,8 @@ public class StoreDocRequest {
     private List<DocComponentDto> docComponentDtos;
 
     public StoreDocRequest() {}
-    public StoreDocRequest(Long docId, String type, Long memberId, String title, String docUrl, String visibility, List<String> tags, List<DocComponentDto> docComponentDtos) {
+    public StoreDocRequest(Long docId, Long memberId, String title, String docUrl, String visibility, List<String> tags, List<DocComponentDto> docComponentDtos) {
         this.docId = docId;
-        this.type = type;
         this.memberId = memberId;
         this.title = title;
         this.docUrl = docUrl;

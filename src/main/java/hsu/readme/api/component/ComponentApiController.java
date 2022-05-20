@@ -4,10 +4,7 @@ import hsu.readme.api.Response;
 import hsu.readme.api.document.DocComponentDto;
 import hsu.readme.api.document.StoreDocRequest;
 import hsu.readme.api.document.StoreDocResponse;
-import hsu.readme.domain.Document;
-import hsu.readme.domain.Like;
-import hsu.readme.domain.Member;
-import hsu.readme.domain.Tag;
+import hsu.readme.domain.*;
 import hsu.readme.domain.component.Component;
 import hsu.readme.domain.component.Icon;
 import hsu.readme.domain.component.Image;
@@ -35,6 +32,7 @@ public class ComponentApiController {
     private final DocumentService documentService;
     private final ComponentService componentService;
     private final TableContentService tableContentService;
+    private final DocComponentService docComponentService;
     private final LikeService likeService;
     private final TagService tagService;
 
@@ -48,13 +46,7 @@ public class ComponentApiController {
     @PostMapping("/api/v1/doc/edit")
     public Response storeDocComponent(@RequestBody @Valid StoreDocRequest request) {
 
-        try {
-            Document document = documentService.findOne(request.getDocId());
-            documentService.deleteDocument(document);
-        } catch (Exception e){
-
-        }
-
+        //유저가 존재하는지 찾기.
         try{
             Member findMember = memberService.findOne(request.getMemberId());
         }catch (Exception e) {
@@ -91,9 +83,37 @@ public class ComponentApiController {
             tagIds.add(tag.getId());
         }
 
-        Long docSavedId = documentService.makeDocument(request.getDocId(), request.getMemberId(), request.getTitle(), request.getDocUrl(), request.getVisibility(),tagIds, componentIds);
+        if(request.getDocId() == null) {
+            Long docSavedId = documentService.makeDocument(request.getMemberId(), request.getTitle(), request.getDocUrl(), request.getVisibility(),tagIds, componentIds);
+            return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docSavedId));
+        } else {
+            Document document = documentService.findOne(request.getDocId());
+            int size = document.getDocComponents().size();
+            for(int i=0; i<size; i++) {
+                DocComponent docComponent = docComponentService.findOne(document.getDocComponents().get(0).getId());
+                document.getDocComponents().remove(docComponent);
+                docComponentService.delete(docComponent);
+            }
 
-        return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docSavedId));
+            size = document.getTags().size();
+            for(int i=0; i<size; i++) {
+                Tag findTag = tagService.findOne(document.getTags().get(0).getId());
+                document.getTags().remove(findTag);
+                tagService.deleteTag(findTag);
+            }
+
+            Long docEditedId = documentService.editDocument(request.getDocId(), request.getTitle(), request.getDocUrl(), request.getVisibility(), tagIds, componentIds);
+
+            return Response.response("S200", "수정 중", new StoreDocResponse(docEditedId));
+        }
+        /*try {
+            Document document = documentService.findOne(request.getDocId());
+            documentService.deleteDocument(document);
+        } catch (Exception e){
+
+        }
+*/
+
     }
 
     private void setComponent(Component component, DocComponentDto dto) {
