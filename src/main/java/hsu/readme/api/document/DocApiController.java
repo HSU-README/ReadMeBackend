@@ -28,9 +28,8 @@ public class DocApiController {
     @GetMapping("/api/v1/doc/{id}/preview")
     public Response docPreviewV1(@PathVariable Long id) {
         Document document = documentService.findDocumentWithMember(id);
-        List<Like> likes = likeService.findWithDoc(document);
-        DocInfoDto docInfoDto = new DocInfoDto(document, likes);
-        return Response.response("S200", DOC_INFO_SUCCESS, docInfoDto);
+        DocPreviewInfoDto previewInfoDto = new DocPreviewInfoDto(document);
+        return Response.response("S200", DOC_INFO_SUCCESS, previewInfoDto);
     }
 
     @GetMapping("/api/v1/user/{memberId}/docs")

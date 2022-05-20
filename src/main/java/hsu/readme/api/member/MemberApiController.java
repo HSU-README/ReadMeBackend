@@ -2,6 +2,7 @@ package hsu.readme.api.member;
 
 import hsu.readme.api.Response;
 import hsu.readme.api.component.DocInfoDto;
+import hsu.readme.api.document.DocPreviewInfoDto;
 import hsu.readme.domain.Document;
 import hsu.readme.domain.Member;
 import hsu.readme.service.DocumentService;
@@ -65,13 +66,11 @@ public class MemberApiController {
     @GetMapping("/api/v1/member/{id}/docs/like")
     public Response getMemberLikeDocsV1(@PathVariable Long id) {
         List<Document> docs = documentService.findDocsWithMemberLikes(id);
-        System.out.println("@@@@@@@@@@@ " + docs.size() + " @@@@@@@@@@");
-        List<DocInfoDto> docInfoDtos = new ArrayList<>();
+        List<DocPreviewInfoDto> docInfoDtos = new ArrayList<>();
         for(Document doc : docs) {
-            DocInfoDto docInfoDto = new DocInfoDto(doc);
-            docInfoDtos.add(docInfoDto);
+            DocPreviewInfoDto previewInfoDto = new DocPreviewInfoDto(doc);
+            docInfoDtos.add(previewInfoDto);
         }
-
         return Response.response("S200", DOC_INFO_SUCCESS, docInfoDtos);
     }
 }

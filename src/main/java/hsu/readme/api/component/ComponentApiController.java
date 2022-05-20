@@ -41,7 +41,6 @@ public class ComponentApiController {
     @GetMapping("/api/v1/doc/{id}")
     public Response docInfoV1(@PathVariable Long id) {
         Document document = documentService.findDocumentInfo(id);
-//        List<Like> likes = likeService.findWithDoc(document);
         DocInfoDto docInfoDto = new DocInfoDto(document);
         return Response.response("S200", DOC_INFO_SUCCESS, docInfoDto);
     }
