@@ -103,15 +103,8 @@ public class ComponentApiController {
 
             Long docEditedId = documentService.editDocument(request.getDocId(), request.getTitle(), request.getDocUrl(), request.getVisibility(), tagIds, componentIds);
 
-            return Response.response("S200", DOC_EDIT_SUCCESS, new StoreDocResponse(docEditedId));
+            return Response.response("S201", DOC_EDIT_SUCCESS, new StoreDocResponse(docEditedId));
         }
-        /*try {
-            Document document = documentService.findOne(request.getDocId());
-            documentService.deleteDocument(document);
-        } catch (Exception e){
-
-        }
-*/
 
     }
 
