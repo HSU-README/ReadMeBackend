@@ -21,8 +21,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-import static hsu.readme.api.ResponseMessage.DOC_CREATE_SUCCESS;
-import static hsu.readme.api.ResponseMessage.DOC_INFO_SUCCESS;
+import static hsu.readme.api.ResponseMessage.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -104,7 +103,7 @@ public class ComponentApiController {
 
             Long docEditedId = documentService.editDocument(request.getDocId(), request.getTitle(), request.getDocUrl(), request.getVisibility(), tagIds, componentIds);
 
-            return Response.response("S200", "수정 중", new StoreDocResponse(docEditedId));
+            return Response.response("S200", DOC_EDIT_SUCCESS, new StoreDocResponse(docEditedId));
         }
         /*try {
             Document document = documentService.findOne(request.getDocId());

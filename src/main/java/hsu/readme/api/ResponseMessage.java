@@ -21,6 +21,7 @@ public class ResponseMessage {
     //DocApiController
     public static final String DOC_INFO_SUCCESS = "문서 정보 조회 성공";
     public static final String DOC_CREATE_SUCCESS = "문서 생성 성공";
+    public static final String DOC_EDIT_SUCCESS = "문서 수정 성공";
     public static final String DOC_DELETE_SUCCESS = "문서 삭제 성공";
     public static final String DOC_LIKE_SUCCESS = "문서 좋아요 성공";
     public static final String DOC_UNLIKE_SUCCESS = "문서 좋아요 취소 성공";
