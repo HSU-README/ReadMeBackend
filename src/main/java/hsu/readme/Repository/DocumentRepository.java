@@ -13,6 +13,8 @@ import javax.persistence.PersistenceContext;
 import javax.print.Doc;
 import java.util.List;
 
+import static hsu.readme.domain.QTag.*;
+import static hsu.readme.domain.QMember.*;
 import static hsu.readme.domain.QDocument.*;
 
 @Repository
@@ -122,20 +124,23 @@ public class DocumentRepository {
     public List<Document> searchDocuments(String search) {
         return query.select(document)
                 .from(document)
-                .where(titleLike(search))
+                .distinct()
+                .join(document.tags, tag)
+                .join(document.member, member)
+                .where(titleLike(search).or(tagLike(search)))
                 .limit(1000)
                 .fetch();
     }
 
     private BooleanExpression titleLike(String search) {
         if(!StringUtils.hasText(search)) return null;
-        return document.title.like(search);
+        return document.title.contains(search);
     }
 
-    /*private Boolean tagLike(String search) {
+    private BooleanExpression tagLike(String search) {
         if(!StringUtils.hasText(search)) {
-            return null
+            return null;
         }
-        return document.tags.contains()
-    }*/
+        return tag.name.contains(search);
+    }
 }

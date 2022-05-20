@@ -11,7 +11,9 @@ import hsu.readme.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,5 +85,15 @@ public class DocApiController {
                 .map(DocInfoDto_legacy::new)
                 .collect(Collectors.toList());
         return Response.response("S200", DOC_INFO_SUCCESS, docs);
+    }
+
+    @GetMapping("/api/v1/doc/search")
+    public Response searchDocsV1() {
+        List<Document> docs = documentService.findDocsWithSearch("test");
+        List<DocInfoDto> docInfoDtos = new ArrayList<>();
+        for(Document doc : docs) {
+            docInfoDtos.add(new DocInfoDto(doc));
+        }
+        return Response.response("S200", "서치", docInfoDtos);
     }
 }

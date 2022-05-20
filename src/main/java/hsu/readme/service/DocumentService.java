@@ -72,6 +72,10 @@ public class DocumentService {
         return documentRepository.findMemberLikeDocs(memberId);
     }
 
+    public List<Document> findDocsWithSearch(String search) {
+        return documentRepository.searchDocuments(search);
+    }
+
     /*
     * 문서 생성
      */
