@@ -88,12 +88,12 @@ public class DocApiController {
     }
 
     @GetMapping("/api/v1/doc/search")
-    public Response searchDocsV1() {
-        List<Document> docs = documentService.findDocsWithSearch("test");
+    public Response searchDocsV1(@RequestParam String where) {
+        List<Document> docs = documentService.findDocsWithSearch(where);
         List<DocInfoDto> docInfoDtos = new ArrayList<>();
         for(Document doc : docs) {
             docInfoDtos.add(new DocInfoDto(doc));
         }
-        return Response.response("S200", "서치", docInfoDtos);
+        return Response.response("S200", DOC_SEARCH_SUCCESS, docInfoDtos);
     }
 }
