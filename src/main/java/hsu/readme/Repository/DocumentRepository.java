@@ -1,6 +1,7 @@
 package hsu.readme.Repository;
 
 import hsu.readme.domain.Document;
+import hsu.readme.domain.Member;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -87,6 +88,15 @@ public class DocumentRepository {
                 " join fetch d.member m " +
                 " where m.id = :id", Document.class)
                 .setParameter("id", memberId)
+                .getResultList();
+    }
+
+    public List<Document> findMemberLikeDocs(Long memberId) {
+        return em.createQuery("select d from Document d " +
+                " join fetch d.likes l " +
+                " join fetch d.member m" +
+                " where m.id = :memberId", Document.class)
+                .setParameter("memberId", memberId)
                 .getResultList();
     }
 }

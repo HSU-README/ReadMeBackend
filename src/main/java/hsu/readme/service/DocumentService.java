@@ -69,6 +69,11 @@ public class DocumentService {
 
         return documentInfo;
     }
+
+    public List<Document> findDocsWithMemberLikes(Long memberId) {
+        return documentRepository.findMemberLikeDocs(memberId);
+    }
+
     /*
     * 문서 생성
      */

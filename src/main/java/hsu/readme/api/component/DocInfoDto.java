@@ -40,4 +40,18 @@ public class DocInfoDto {
                 .map(DocComponentDto::new)
                 .collect(Collectors.toList());
     }
+
+    public DocInfoDto(Document document) {
+        this.docId = document.getId();
+        this.title = document.getTitle();
+        this.docDate = document.getDocumentDate();
+        this.visibility = document.getVisibility();
+        this.likes = document.getLikes().stream().map(LikeDto::new).collect(Collectors.toList());
+        this.tags = document.getTags().stream().map(DocumentTagDto::new).collect(Collectors.toList());
+        this.docUrl = document.getDocUrl();
+        this.designer = document.getMember().getName();
+        this.docComponentDtos = document.getDocComponents().stream()
+                .map(DocComponentDto::new)
+                .collect(Collectors.toList());
+    }
 }

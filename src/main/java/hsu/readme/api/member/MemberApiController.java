@@ -1,12 +1,18 @@
 package hsu.readme.api.member;
 
 import hsu.readme.api.Response;
+import hsu.readme.api.component.DocInfoDto;
+import hsu.readme.domain.Document;
 import hsu.readme.domain.Member;
+import hsu.readme.service.DocumentService;
 import hsu.readme.service.MemberService;
 import lombok.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static hsu.readme.api.ResponseMessage.*;
 
@@ -15,6 +21,7 @@ import static hsu.readme.api.ResponseMessage.*;
 public class MemberApiController {
 
     private final MemberService memberService;
+    private final DocumentService documentService;
 
     @PostMapping("/api/v1/members/new")
     @ResponseBody
@@ -53,5 +60,18 @@ public class MemberApiController {
         Member member = memberService.findOne(id);
         return Response.response("S200", PUT_MEMBER_INFO_SUCCESS,
                 new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests()));
+    }
+
+    @GetMapping("/api/v1/member/{id}/docs/like")
+    public Response getMemberLikeDocsV1(@PathVariable Long id) {
+        List<Document> docs = documentService.findDocsWithMemberLikes(id);
+        System.out.println("@@@@@@@@@@@ " + docs.size() + " @@@@@@@@@@");
+        List<DocInfoDto> docInfoDtos = new ArrayList<>();
+        for(Document doc : docs) {
+            DocInfoDto docInfoDto = new DocInfoDto(doc);
+            docInfoDtos.add(docInfoDto);
+        }
+
+        return Response.response("S200", DOC_INFO_SUCCESS, docInfoDtos);
     }
 }
