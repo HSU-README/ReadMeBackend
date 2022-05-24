@@ -74,8 +74,8 @@ public class MemberApiController {
     public Response memberDocsV1(@PathVariable Long memberId) {
         List<Document> memberDocs = documentService.findMemberDocs(memberId);
 
-        List<MemberDocsDto> docs = memberDocs.stream()
-                .map(MemberDocsDto::new)
+        List<DocPreviewInfoDto> docs = memberDocs.stream()
+                .map(DocPreviewInfoDto::new)
                 .collect(Collectors.toList());
         return Response.response("S200", DOC_INFO_SUCCESS, docs);
     }
