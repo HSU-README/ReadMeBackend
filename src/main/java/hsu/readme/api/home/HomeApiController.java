@@ -1,20 +1,21 @@
 package hsu.readme.api.home;
 
 import hsu.readme.api.Response;
+import hsu.readme.api.document.DocPreviewInfoDto;
 import hsu.readme.domain.*;
 import hsu.readme.service.AdService;
 import hsu.readme.service.DocumentService;
 import hsu.readme.service.MemberService;
 import hsu.readme.service.TagService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static hsu.readme.api.ResponseMessage.DOC_INFO_SUCCESS;
 import static hsu.readme.api.ResponseMessage.HOME_INFO_SUCCESS;
 
 @RestController
@@ -26,21 +27,51 @@ public class HomeApiController {
     private final TagService tagService;
     private final AdService adService;
 
-    @GetMapping("/api/v1/home")
-    @ResponseBody
-    public Response homeInfoV1(){
-        makeAds();
-        makeDocuments();
-
-        List<Adv> ads = adService.findAds();
-        List<Document> findDocuments = documentService.findDocumentsByLikeDesc(5);
-
-        List<HomeInfoDocDto> topDocuments = findDocuments.stream()
-                .map(HomeInfoDocDto::new)
+    //홈 전체 게시글
+    @GetMapping("/api/v1/home/docs/all")
+    public Response homeDocsV1(@RequestParam(value = "start", defaultValue = "0") int start,
+                               @RequestParam(value = "limit", defaultValue = "8") int limit) {
+        List<Document> documentsSortedByDocDate = documentService.findDocumentsSortedByDocDate(start, limit);
+        List<DocPreviewInfoDto> docs = documentsSortedByDocDate.stream().map(DocPreviewInfoDto::new)
                 .collect(Collectors.toList());
-        return Response.response("S200", HOME_INFO_SUCCESS, new HomeInfoResult(ads, topDocuments));
+        return Response.response("S200", DOC_INFO_SUCCESS, docs);
     }
 
+    //홈 인기 게시글
+    @GetMapping("/api/v1/home/docs/mostLike")
+    public Response homeDocsMostLikeV1(@RequestParam(value = "start", defaultValue = "0") int start,
+                                       @RequestParam(value = "limit", defaultValue = "8") int limit) {
+        List<Document> documentsByLikeDesc = documentService.findDocumentsByLikeDesc(start, limit);
+        List<DocPreviewInfoDto> docs = documentsByLikeDesc.stream().map(DocPreviewInfoDto::new)
+                .sorted(Comparator.comparingInt(DocPreviewInfoDto::getLikeCnt)
+                .reversed())
+                .collect(Collectors.toList());
+        return Response.response("S200", DOC_INFO_SUCCESS, docs);
+    }
+
+    //홈 유저 전공 관련 게시글
+    @GetMapping("/api/v1/home/docs/memberMajor")
+    public Response homeDocsMemberMajorV1(@RequestBody @Valid HomeMajorRequest request,
+                                          @RequestParam(value = "start", defaultValue = "0") int start,
+                                          @RequestParam(value = "limit", defaultValue = "8") int limit) {
+        Member member = memberService.findOne(request.getMemberId());
+        List<Document> documentsByLikeDesc = documentService.findDocsWithMemberMajor(member.getMajor(), start, limit);
+        List<DocPreviewInfoDto> docs = documentsByLikeDesc.stream().map(DocPreviewInfoDto::new)
+                .collect(Collectors.toList());
+        return Response.response("S200", DOC_INFO_SUCCESS, docs);
+    }
+
+    //홈 유저 전공 = 게시글 전공 호출
+    @GetMapping("/api/v1/home/docs/major")
+    public Response homeDocsMajorV1(@RequestBody @Valid HomeMajorRequest request) {
+        Member member = memberService.findOne(request.getMemberId());
+        List<Document> documentsByLikeDesc = documentService.findDocsWithMajor(member.getMajor());
+        List<DocPreviewInfoDto> docs = documentsByLikeDesc.stream().map(DocPreviewInfoDto::new)
+                .collect(Collectors.toList());
+        return Response.response("S200", DOC_INFO_SUCCESS, docs);
+    }
+
+/*
     private void makeDocuments() {
         Member member = new Member();
         member.setName("designer");
@@ -88,5 +119,5 @@ public class HomeApiController {
             ad.setImgUrl("test"+i);
             adService.join(ad);
         }
-    }
+    }*/
 }

@@ -83,7 +83,7 @@ public class ComponentApiController {
         }
 
         if(request.getDocId() == null) {
-            Long docSavedId = documentService.makeDocument(request.getMemberId(), request.getTitle(), request.getDocUrl(), request.getVisibility(),tagIds, componentIds);
+            Long docSavedId = documentService.makeDocument(request.getMemberId(), request.getTitle(), request.getDocUrl(), request.getVisibility(), request.getMajor(),tagIds, componentIds);
             return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docSavedId));
         } else {
             Document document = documentService.findOne(request.getDocId());
@@ -101,7 +101,7 @@ public class ComponentApiController {
                 tagService.deleteTag(findTag);
             }
 
-            Long docEditedId = documentService.editDocument(request.getDocId(), request.getTitle(), request.getDocUrl(), request.getVisibility(), tagIds, componentIds);
+            Long docEditedId = documentService.editDocument(request.getDocId(), request.getTitle(), request.getDocUrl(), request.getVisibility(), request.getMajor(), tagIds, componentIds);
 
             return Response.response("S201", DOC_EDIT_SUCCESS, new StoreDocResponse(docEditedId));
         }

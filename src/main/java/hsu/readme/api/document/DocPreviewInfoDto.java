@@ -19,7 +19,9 @@ public class DocPreviewInfoDto {
     private List<LikeDto> likes;
     private int likeCnt;
     private String docUrl;
+    private String major;
     private String designer;
+    private String designerUrl;
 
     public DocPreviewInfoDto(Document document) {
         this.docId = document.getId();
@@ -29,7 +31,9 @@ public class DocPreviewInfoDto {
         this.likes = document.getLikes().stream().map(LikeDto::new).collect(Collectors.toList());
         this.likeCnt = document.getLikes().size();
         this.tags = document.getTags().stream().map(DocumentTagDto::new).collect(Collectors.toList());
+        this.major = document.getDocMajor();
         this.docUrl = document.getDocUrl();
         this.designer = document.getMember().getName();
+        this.designerUrl = document.getMember().getProfileUrl();
     }
 }

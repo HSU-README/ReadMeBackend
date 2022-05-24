@@ -27,6 +27,15 @@ public class DocApiController {
     private final DocumentService documentService;
     private final LikeService likeService;
 
+    //문서 전체 호출
+    @GetMapping("/api/v1/docs/all")
+    public Response docsAllV1() {
+        List<Document> documentsSortedByDocDate = documentService.findDocumentsSortedByDocDate();
+        List<DocPreviewInfoDto> docs = documentsSortedByDocDate.stream().map(DocPreviewInfoDto::new)
+                .collect(Collectors.toList());
+        return Response.response("S200", DOC_INFO_SUCCESS, docs);
+    }
+
     //문서 미리보기 API
     @GetMapping("/api/v1/doc/{id}/preview")
     public Response docPreviewV1(@PathVariable Long id) {
@@ -75,7 +84,6 @@ public class DocApiController {
             return Response.response("S200", DOC_UNLIKE_SUCCESS, new LikeRequestDto(findMember.getId()));
         }
     }
-
 
     @GetMapping("/api/v1/docall")
     public Response docInfoV1() {

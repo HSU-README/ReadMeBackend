@@ -1,11 +1,7 @@
 package hsu.readme.service;
 
 import hsu.readme.Repository.*;
-import hsu.readme.api.component.DocInfoDto;
-import hsu.readme.domain.DocComponent;
-import hsu.readme.domain.Document;
-import hsu.readme.domain.Member;
-import hsu.readme.domain.Tag;
+import hsu.readme.domain.*;
 import hsu.readme.domain.component.Component;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,18 +36,21 @@ public class DocumentService {
         return documentRepository.findAll();
     }
 
+    //문서 전체 조회
+    public List<Document> findDocumentsSortedByDocDate(){
+        return documentRepository.findAllSortedByDocDate();
+    }
+
+    public List<Document> findDocumentsSortedByDocDate(int offset, int limit){
+        return documentRepository.findAllSortedByDocDate(offset, limit);
+    }
+
     public Document findOne(Long documentId){
         return documentRepository.findOne(documentId);
     }
 
-    public List<Document> findDocumentsByLikeDesc(int cnt){
-        return documentRepository.findTopDocumentsOrderByLikeCnt(cnt);
-    }
-
-    public List<Document> findDocumentsWithTag(){
-        List<Document> find = documentRepository.findAllWithTags();
-        System.out.println("service: " + find.size());
-        return find;
+    public List<Document> findDocumentsByLikeDesc(int start, int limit){
+        return documentRepository.findTopDocumentsOrderByLikeCnt(start, limit);
     }
 
     public Document findDocumentWithMember(Long docId){
@@ -63,13 +62,23 @@ public class DocumentService {
     }
 
     public Document findDocumentInfo(Long docId) {
-        Document documentInfo = documentRepository.findDocumentInfo(docId);
-
-        return documentInfo;
+        return documentRepository.findDocumentInfo(docId);
     }
 
     public List<Document> findDocsWithMemberLikes(Long memberId) {
         return documentRepository.findMemberLikeDocs(memberId);
+    }
+
+    public List<Document> findDocsWithMajor(String major) {
+        return documentRepository.findAllWithMajor(major);
+    }
+
+    /*public List<Document> findDocsWithMemberMajor(String major) {
+        return documentRepository.findAllWithMemberMajor(major);
+    }*/
+
+    public List<Document> findDocsWithMemberMajor(String major, int start, int limit) {
+        return documentRepository.findAllWithMemberMajor(major, start, limit);
     }
 
     public List<Document> findDocsWithSearch(String search) {
@@ -80,16 +89,15 @@ public class DocumentService {
     * 문서 생성
      */
     @Transactional
-    public Long makeDocument(Long memberId, String title, String docUrl, String visibility, List<Long> tagIds, List<Long> componentIds) {
+    public Long makeDocument(Long memberId, String title, String docUrl, String visibility, String major, List<Long> tagIds, List<Long> componentIds) {
 
         Member member = memberRepository.findOne(memberId);
-
 
         List<DocComponent> docComponents = createDocComponents(componentIds);
 
         List<Tag> tags = createTags(tagIds);
 
-        Document document = Document.createDocument(member, title, docUrl, visibility, tags, docComponents);
+        Document document = Document.createDocument(member, title, docUrl, visibility, major, tags, docComponents);
 
         documentRepository.save(document);
 
@@ -97,7 +105,7 @@ public class DocumentService {
     }
 
     @Transactional
-    public Long editDocument(Long docId, String title, String docUrl, String visibility, List<Long> tagIds, List<Long> componentIds) {
+    public Long editDocument(Long docId, String title, String docUrl, String visibility, String major, List<Long> tagIds, List<Long> componentIds) {
         Document document = documentRepository.findOne(docId);
         document.getDocComponents().clear();
         document.getTags().clear();
@@ -114,6 +122,16 @@ public class DocumentService {
             document.getTags().add(tag);
             tag.setDocument(document);
         }
+
+        document.setTitle(title);
+        document.setDocUrl(docUrl);
+        if(visibility.equals("public")) {
+            document.setVisibility(DocumentVisibility.PUBLIC);
+        } else {
+            document.setVisibility(DocumentVisibility.PRIVATE);
+        }
+        document.setDocMajor(major);
+
         return document.getId();
     }
 
@@ -147,6 +165,4 @@ public class DocumentService {
         documentRepository.deleteDocument(document);
         return document.getId();
     }
-
-
 }

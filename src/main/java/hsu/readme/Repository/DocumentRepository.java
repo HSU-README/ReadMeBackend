@@ -43,20 +43,45 @@ public class DocumentRepository {
                 .getResultList();
     }
 
-    public List<Document> findByTitle(String title){
-        return em.createQuery(
-                "select d from Document d " +
-                        " where d.title = :title", Document.class)
-                .setParameter("title", title)
+    public List<Document> findAllSortedByDocDate(){
+        return em.createQuery("select d from Document d " +
+                " order by d.documentDate desc", Document.class)
                 .getResultList();
     }
 
-    public List<Document> findTopDocumentsOrderByLikeCnt(int cnt) {
-        return em.createQuery(
-                "select d from Document d " +
-                        "left join fetch d.tags t " +
-                        " order by d.likeCnt desc ", Document.class)
-                .setMaxResults(cnt)
+    public List<Document> findAllSortedByDocDate(int offset, int limit){
+        return em.createQuery("select d from Document d " +
+                " order by d.documentDate desc", Document.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public List<Document> findAllWithMajor(String major){
+            return em.createQuery("select d from Document d " +
+                    " where d.docMajor like :major" +
+                    " order by d.documentDate desc", Document.class)
+                    .setParameter("major", major)
+                .getResultList();
+    }
+
+    /*public List<Document> findAllWithMemberMajor(String major){
+        return em.createQuery("select d from Document d " +
+                " join fetch d.member m " +
+                " where m.major like :major" +
+                " order by d.documentDate desc", Document.class)
+                .setParameter("major", major)
+                .getResultList();
+    }*/
+
+    public List<Document> findAllWithMemberMajor(String major, int start, int limit){
+        return em.createQuery("select d from Document d " +
+                " join fetch d.member m " +
+                " where m.major like :major" +
+                " order by d.documentDate desc", Document.class)
+                .setParameter("major", major)
+                .setFirstResult(start)
+                .setMaxResults(limit)
                 .getResultList();
     }
 
@@ -111,6 +136,16 @@ public class DocumentRepository {
                 " join fetch d.member m" +
                 " where m.id = :memberId", Document.class)
                 .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
+    public List<Document> findTopDocumentsOrderByLikeCnt(int start, int limit) {
+        return em.createQuery(
+                "select d from Document d " +
+                        " join fetch d.member m " +
+                        " order by d.documentDate desc", Document.class)
+                .setFirstResult(start)
+                .setMaxResults(limit)
                 .getResultList();
     }
 

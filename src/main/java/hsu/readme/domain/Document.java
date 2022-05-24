@@ -38,6 +38,8 @@ public class Document {
 
     private String docUrl;
 
+    private String docMajor;
+
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private List<Tag> tags = new ArrayList<>();
 
@@ -69,11 +71,12 @@ public class Document {
     }
 
     //== 생성 메서드 ==//
-    public static Document createDocument(Member member, String title, String docUrl, String visibility, List<Tag> tags,  List<DocComponent> docComponents) {
+    public static Document createDocument(Member member, String title, String docUrl, String visibility, String major, List<Tag> tags,  List<DocComponent> docComponents) {
         Document document = new Document();
         document.setMember(member);
         document.setTitle(title);
         document.setDocUrl(docUrl);
+        document.setDocMajor(major);
 
         for(Tag tag : tags) {
             document.addTag(tag);

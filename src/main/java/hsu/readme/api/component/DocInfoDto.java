@@ -23,23 +23,9 @@ public class DocInfoDto {
     private int likeCnt;
     private String docUrl;
     private String designer;
+    private String designerUrl;
     @JsonProperty("components")
     private List<DocComponentDto> docComponentDtos;
-
-    public DocInfoDto(Document document, List<Like> likes) {
-        this.docId = document.getId();
-        this.title = document.getTitle();
-        this.docDate = document.getDocumentDate();
-        this.visibility = document.getVisibility();
-        this.likes = likes.stream().map(LikeDto::new).collect(Collectors.toList());
-        this.tags = document.getTags().stream().map(DocumentTagDto::new).collect(Collectors.toList());
-        this.likeCnt = likes.size();
-        this.docUrl = document.getDocUrl();
-        this.designer = document.getMember().getName();
-        this.docComponentDtos = document.getDocComponents().stream()
-                .map(DocComponentDto::new)
-                .collect(Collectors.toList());
-    }
 
     public DocInfoDto(Document document) {
         this.docId = document.getId();
@@ -47,9 +33,11 @@ public class DocInfoDto {
         this.docDate = document.getDocumentDate();
         this.visibility = document.getVisibility();
         this.likes = document.getLikes().stream().map(LikeDto::new).collect(Collectors.toList());
+        this.likeCnt = likes.size();
         this.tags = document.getTags().stream().map(DocumentTagDto::new).collect(Collectors.toList());
         this.docUrl = document.getDocUrl();
         this.designer = document.getMember().getName();
+        this.designerUrl = document.getMember().getProfileUrl();
         this.docComponentDtos = document.getDocComponents().stream()
                 .map(DocComponentDto::new)
                 .collect(Collectors.toList());

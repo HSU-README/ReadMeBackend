@@ -15,19 +15,22 @@ public class StoreDocRequest {
     private String title;
     private String docUrl;
     private String visibility;
+    private String major;
     private List<String> tags;
 
     @JsonProperty("components")
     private List<DocComponentDto> docComponentDtos;
 
     public StoreDocRequest() {}
-    public StoreDocRequest(Long docId, Long memberId, String title, String docUrl, String visibility, List<String> tags, List<DocComponentDto> docComponentDtos) {
+
+    public StoreDocRequest(Long docId, Long memberId, String title, String docUrl, String visibility, String major, List<String> tags, List<DocComponentDto> docComponentDtos) {
         this.docId = docId;
         this.memberId = memberId;
         this.title = title;
         this.docUrl = docUrl;
         this.visibility = visibility;
-        this.docComponentDtos = docComponentDtos;
+        this.major = major;
         this.tags = tags;
+        this.docComponentDtos = docComponentDtos;
     }
 }
