@@ -69,8 +69,8 @@ public class DocumentService {
         return documentRepository.findMemberLikeDocs(memberId);
     }
 
-    public List<Document> findDocsWithMajor(String major) {
-        return documentRepository.findAllWithMajor(major);
+    public List<Document> findDocsWithMajor(String major, int start, int limit) {
+        return documentRepository.findAllWithMajor(major, start, limit);
     }
 
     /*public List<Document> findDocsWithMemberMajor(String major) {

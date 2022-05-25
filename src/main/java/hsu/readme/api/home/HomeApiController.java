@@ -51,7 +51,7 @@ public class HomeApiController {
 
     //홈 유저 전공 관련 게시글
     @GetMapping("/api/v1/home/docs/memberMajor")
-    public Response homeDocsMemberMajorV1(@RequestBody @Valid HomeMajorRequest request,
+    public Response homeDocsMemberMajorV1(@RequestParam @Valid HomeMajorRequest request,
                                           @RequestParam(value = "start", defaultValue = "0") int start,
                                           @RequestParam(value = "limit", defaultValue = "8") int limit) {
         Member member = memberService.findOne(request.getMemberId());
@@ -63,9 +63,11 @@ public class HomeApiController {
 
     //홈 유저 전공 = 게시글 전공 호출
     @GetMapping("/api/v1/home/docs/major")
-    public Response homeDocsMajorV1(@RequestBody @Valid HomeMajorRequest request) {
-        Member member = memberService.findOne(request.getMemberId());
-        List<Document> documentsByLikeDesc = documentService.findDocsWithMajor(member.getMajor());
+    public Response homeDocsMajorV1(@RequestParam(value="memberId") long memberId,
+                                    @RequestParam(value = "start", defaultValue = "0") int start,
+                                    @RequestParam(value = "limit", defaultValue = "8") int limit) {
+        Member member = memberService.findOne(memberId);
+        List<Document> documentsByLikeDesc = documentService.findDocsWithMajor(member.getMajor(), start, limit);
         List<DocPreviewInfoDto> docs = documentsByLikeDesc.stream().map(DocPreviewInfoDto::new)
                 .collect(Collectors.toList());
         return Response.response("S200", DOC_INFO_SUCCESS, docs);

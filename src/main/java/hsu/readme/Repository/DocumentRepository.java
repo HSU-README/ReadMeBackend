@@ -57,11 +57,13 @@ public class DocumentRepository {
                 .getResultList();
     }
 
-    public List<Document> findAllWithMajor(String major){
+    public List<Document> findAllWithMajor(String major, int start, int limit){
             return em.createQuery("select d from Document d " +
                     " where d.docMajor like :major" +
                     " order by d.documentDate desc", Document.class)
                     .setParameter("major", major)
+                    .setFirstResult(start)
+                    .setMaxResults(limit)
                 .getResultList();
     }
 
