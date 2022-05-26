@@ -21,4 +21,9 @@ public class ComponentService {
     public List<Component> findComponents() {return componentRepository.findAll(); }
 
     public Component findOne(Long componentId) {return componentRepository.findOne(componentId); }
+
+    @Transactional
+    public void remove(Component component){
+        componentRepository.delete(component);
+    }
 }

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -17,6 +19,8 @@ public class DocComponentService {
     public DocComponent findOne(Long id) {
         return docComponentRepository.findOne(id);
     }
+
+    public List<DocComponent> findAll() { return docComponentRepository.findAll(); }
 
     @Transactional
     public Long delete(DocComponent docComponent) {

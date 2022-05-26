@@ -29,4 +29,8 @@ public class ComponentRepository {
         return em.createQuery("select c from Component c", Component.class)
                 .getResultList();
     }
+
+    public void delete(Component component) {
+        em.remove(component);
+    }
 }

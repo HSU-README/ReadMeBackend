@@ -53,33 +53,37 @@ public class ComponentApiController {
         }
 
         List<Long> componentIds = new ArrayList<>();
-        for (DocComponentDto dto : request.getDocComponentDtos()) {
-            String type = dto.getType();
+        if(request.getDocComponentDtos().size() != 0 && request.getDocComponentDtos() != null) {
+            for (DocComponentDto dto : request.getDocComponentDtos()) {
+                String type = dto.getType();
 
-            long componentId = -1;
-            switch (type) {
-                case "text":
-                    componentId = setTextComponent(dto);
-                    break;
-                case "image":
-                    componentId = setImageComponent(dto);
-                    break;
-                case "icon":
-                    componentId = setIconComponent(dto);
-                    break;
-                case "table":
-                    componentId = setTableComponent(dto);
-                    break;
+                long componentId = -1;
+                switch (type) {
+                    case "text":
+                        componentId = setTextComponent(dto);
+                        break;
+                    case "image":
+                        componentId = setImageComponent(dto);
+                        break;
+                    case "icon":
+                        componentId = setIconComponent(dto);
+                        break;
+                    case "table":
+                        componentId = setTableComponent(dto);
+                        break;
+                }
+                componentIds.add(componentId);
             }
-            componentIds.add(componentId);
         }
 
         List<Long> tagIds = new ArrayList<>();
-        for(String name : request.getTags()) {
-            Tag tag = new Tag();
-            tag.setName(name);
-            tagService.join(tag);
-            tagIds.add(tag.getId());
+        if(request.getTags().size() != 0 && request.getTags() != null) {
+            for(String name : request.getTags()) {
+                Tag tag = new Tag();
+                tag.setName(name);
+                tagService.join(tag);
+                tagIds.add(tag.getId());
+            }
         }
 
         if(request.getDocId() == null) {

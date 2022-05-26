@@ -57,6 +57,16 @@ public class MemberService {
         return member;
     }
 
+    public List<Member> findAll() {
+        List<Member> all = memberRepository.findAll();
+        return all;
+    }
+
+    @Transactional
+    public void remove(Member member) {
+        memberRepository.delete(member);
+    }
+
     /*
     * 멤버 정보 수정
     */
