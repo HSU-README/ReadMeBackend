@@ -30,11 +30,6 @@ public class TestApiController {
 
     @GetMapping("/important/docs/remove")
     public Response test(){
-        List<Member> members = memberService.findAll();
-        for(Member m : members) {
-            memberService.remove(m);
-        }
-
         List<DocComponent> dcs = docComponentService.findAll();
         for(DocComponent dc : dcs) {
             docComponentService.delete(dc);
@@ -48,6 +43,11 @@ public class TestApiController {
         List<Document> docs = documentService.findDocuments();
         for(Document d : docs) {
             documentService.deleteDocument(d);
+        }
+
+        List<Member> members = memberService.findAll();
+        for(Member m : members) {
+            memberService.remove(m);
         }
 
         return Response.response("S200", "다 삭제됨 ㅋㅋ", 1);
