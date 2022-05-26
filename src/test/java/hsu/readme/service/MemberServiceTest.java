@@ -20,7 +20,7 @@ class MemberServiceTest {
     @Autowired
     MemberRepository memberRepository;
 
-    @Test
+    /*@Test
     public void 회원가입() throws Exception{
         Member member = new Member();
         member.setName("kim");
@@ -31,7 +31,7 @@ class MemberServiceTest {
 
         Long savedId = memberService.join(member);
         assertEquals(member, memberRepository.findOne(savedId));
-    }
+    }*/
 
     @Test
     public void 중복_회원_예외_이메일() throws Exception{
