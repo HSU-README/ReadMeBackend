@@ -5,6 +5,8 @@ import hsu.readme.api.Tag.DocumentTagDto;
 import lombok.Data;
 import lombok.Getter;
 
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +15,8 @@ public class StoreDocRequest {
     private Long docId;
     private Long memberId;
     private String title;
+
+    @Lob
     private String docUrl;
     private String visibility;
     private String major;
@@ -28,6 +32,7 @@ public class StoreDocRequest {
         this.memberId = memberId;
         this.title = title;
         this.docUrl = docUrl;
+        System.out.println("docUrl"+ docUrl);
         this.visibility = visibility;
         this.major = major;
         this.tags = tags;
