@@ -16,7 +16,6 @@ class DocumentServiceTest {
     DocumentService documentService;
 
     @Test
-    @Rollback(value = false)
     public void 문서작성() throws Exception{
         //given
         Document document = new Document();
@@ -24,13 +23,12 @@ class DocumentServiceTest {
 //        document.setLikeCnt(2);
 
         //when
-        documentService.join(document);
+//        documentService.join(document);
 
         //then
     }
 
     @Test
-    @Rollback(value = false)
     public void 태그_확인() throws Exception{
         //given
         Document document = new Document();
@@ -41,7 +39,7 @@ class DocumentServiceTest {
         document.getTags().add(tag);
 
         //when
-        documentService.join(document);
+//        documentService.join(document);
         //then
     }
 }
