@@ -21,6 +21,8 @@ public class Member{
     private String email;
     private String password;
 
+    @Lob
+    @Column(length = 3000)
     private String profileUrl;
 
     private String university;

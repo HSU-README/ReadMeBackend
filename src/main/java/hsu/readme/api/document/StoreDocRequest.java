@@ -17,7 +17,9 @@ public class StoreDocRequest {
     private String title;
 
     @Lob
+    @Column(length = 3000)
     private String docUrl;
+
     private String visibility;
     private String major;
     private List<String> tags;

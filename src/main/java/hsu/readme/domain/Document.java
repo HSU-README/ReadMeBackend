@@ -37,6 +37,7 @@ public class Document {
     private LocalDateTime documentDate;
 
     @Lob
+    @Column(length = 3000)
     private String docUrl;
 
     private String docMajor;
