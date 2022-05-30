@@ -11,4 +11,5 @@ public class ErrorCode {
     public static final String LOGIN_EMAIL_ERROR = "L001";
     public static final String LOGIN_PASSWORD_ERROR = "L002";
 
+    public static final String USER_ALREADY_DOC_LIKE_ERROR = "LK001";
 }

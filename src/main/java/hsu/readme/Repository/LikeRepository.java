@@ -30,11 +30,12 @@ public class LikeRepository {
                 .getResultList();
     }
 
-    public List<Like> findLikeWithDoc(Long docId) {
+    public List<Like> findIsMemberDocLike(Long docId, Long memberId) {
         return em.createQuery("select l from Like l " +
                 " join fetch l.document d " +
-                " where d.id = :docId", Like.class)
+                " where d.id = :docId and l.member.id = :memberId", Like.class)
                 .setParameter("docId", docId)
+                .setParameter("memberId", memberId)
                 .getResultList();
     }
 

@@ -25,6 +25,9 @@ public class ResponseMessage {
     public static final String DOC_DELETE_SUCCESS = "문서 삭제 성공";
     public static final String DOC_SEARCH_SUCCESS = "문서 탐색 성공";
     public static final String DOC_LIKE_SUCCESS = "문서 좋아요 성공";
+
+    public static final String DOC_LIKE_EXISTED = "문서 좋아요 이미 존재";
+
     public static final String DOC_UNLIKE_SUCCESS = "문서 좋아요 취소 성공";
     public static final String DOC_LIKE_NOT_EXIST = "문서 좋아요가 존재하지 않습니다.";
 }

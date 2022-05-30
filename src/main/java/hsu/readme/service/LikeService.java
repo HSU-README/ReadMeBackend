@@ -41,8 +41,8 @@ public class LikeService {
         return likeRepository.findLikeInDocWithMember(member.getId(), document.getId());
     }
 
-    public List<Like> findWithDoc(Document document){
-        return likeRepository.findLikeWithDoc(document.getId());
+    public List<Like> findIsMemberDocLike(Long docId, Long memberId){
+        return likeRepository.findIsMemberDocLike(docId, memberId);
     }
 
     @Transactional

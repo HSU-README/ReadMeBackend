@@ -135,8 +135,7 @@ public class DocumentRepository {
     public List<Document> findMemberLikeDocs(Long memberId) {
         return em.createQuery("select d from Document d " +
                 " join fetch d.likes l " +
-                " join fetch d.member m" +
-                " where m.id = :memberId", Document.class)
+                " where l.member.id = :memberId", Document.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
     }

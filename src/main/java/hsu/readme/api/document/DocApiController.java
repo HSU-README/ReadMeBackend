@@ -5,13 +5,14 @@ import hsu.readme.api.component.DocInfoDto;
 import hsu.readme.domain.Document;
 import hsu.readme.domain.Like;
 import hsu.readme.domain.Member;
+import hsu.readme.exception.ApiException;
+import hsu.readme.exception.ExceptionEnum;
 import hsu.readme.service.DocumentService;
 import hsu.readme.service.LikeService;
 import hsu.readme.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.Doc;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,10 @@ public class DocApiController {
     public Response likeDoc(@PathVariable Long id, @RequestBody @Valid LikeRequestDto likeRequestDto) {
         Member findMember = memberService.findOne(likeRequestDto.getMemberId());
         Document findDoc = documentService.findOne(id);
+        List<Like> likes = likeService.findIsMemberDocLike(id, likeRequestDto.getMemberId());
+        if(likes.size() != 0)
+            return Response.response("EL001", DOC_LIKE_EXISTED, likeRequestDto);
+
         Long createdLike = likeService.createLike(findMember, findDoc);
         return Response.response("S200", DOC_LIKE_SUCCESS, new LikeRequestDto(findMember.getId()));
     }
@@ -78,7 +83,7 @@ public class DocApiController {
         Document findDoc = documentService.findOne(id);
         Like findLike = likeService.findWithDocAndMember(findMember, findDoc);
         if(findLike == null)
-            return Response.response("E200", DOC_LIKE_NOT_EXIST, likeRequestDto);
+            return Response.response("EL001", DOC_LIKE_NOT_EXIST, likeRequestDto);
         else {
             likeService.delete(findLike);
             return Response.response("S200", DOC_UNLIKE_SUCCESS, new LikeRequestDto(findMember.getId()));
