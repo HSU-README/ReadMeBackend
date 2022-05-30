@@ -20,7 +20,7 @@ class AdServiceTest {
         ad.setImgUrl("test");
 
         //when
-        adService.join(ad);
+//        adService.join(ad);
 
         //then
 
