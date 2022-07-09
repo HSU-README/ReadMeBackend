@@ -46,14 +46,14 @@ public class ComponentApiController {
     public Response storeDocComponent(@RequestBody @Valid StoreDocRequest request) {
 
         //유저가 존재하는지 찾기.
-        try{
+        try {
             Member findMember = memberService.findOne(request.getMemberId());
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new ApiException(ExceptionEnum.USER_NOT_EXIST_EXCEPTION);
         }
 
         List<Long> componentIds = new ArrayList<>();
-        if(request.getDocComponentDtos().size() != 0 && request.getDocComponentDtos() != null) {
+        if (request.getDocComponentDtos().size() != 0 && request.getDocComponentDtos() != null) {
             for (DocComponentDto dto : request.getDocComponentDtos()) {
                 String type = dto.getType();
 
@@ -77,8 +77,8 @@ public class ComponentApiController {
         }
 
         List<Long> tagIds = new ArrayList<>();
-        if(request.getTags().size() != 0 && request.getTags() != null) {
-            for(String name : request.getTags()) {
+        if (request.getTags().size() != 0 && request.getTags() != null) {
+            for (String name : request.getTags()) {
                 Tag tag = new Tag();
                 tag.setName(name);
                 tagService.join(tag);
@@ -86,20 +86,20 @@ public class ComponentApiController {
             }
         }
 
-        if(request.getDocId() == null) {
-            Long docSavedId = documentService.makeDocument(request.getMemberId(), request.getTitle(), request.getDocUrl(), request.getVisibility(), request.getMajor(),tagIds, componentIds);
+        if (request.getDocId() == null) {
+            Long docSavedId = documentService.makeDocument(request.getMemberId(), request.getTitle(), request.getDocUrl(), request.getVisibility(), request.getMajor(), tagIds, componentIds);
             return Response.response("S200", DOC_CREATE_SUCCESS, new StoreDocResponse(docSavedId));
         } else {
             Document document = documentService.findOne(request.getDocId());
             int size = document.getDocComponents().size();
-            for(int i=0; i<size; i++) {
+            for (int i = 0; i < size; i++) {
                 DocComponent docComponent = docComponentService.findOne(document.getDocComponents().get(0).getId());
                 document.getDocComponents().remove(docComponent);
                 docComponentService.delete(docComponent);
             }
 
             size = document.getTags().size();
-            for(int i=0; i<size; i++) {
+            for (int i = 0; i < size; i++) {
                 Tag findTag = tagService.findOne(document.getTags().get(0).getId());
                 document.getTags().remove(findTag);
                 tagService.deleteTag(findTag);
@@ -109,7 +109,6 @@ public class ComponentApiController {
 
             return Response.response("S201", DOC_EDIT_SUCCESS, new StoreDocResponse(docEditedId));
         }
-
     }
 
     private void setComponent(Component component, DocComponentDto dto) {
@@ -146,7 +145,7 @@ public class ComponentApiController {
         componentService.saveComponent(table);
         Component findTable = componentService.findOne(table.getId());
 
-        for(TableContentDto tcDto : dto.getTableContentDtos()){
+        for (TableContentDto tcDto : dto.getTableContentDtos()) {
             TableContent tableContent = TableContent.createTableContent(findTable, tcDto);
             tableContentService.saveTableContent(tableContent);
         }
