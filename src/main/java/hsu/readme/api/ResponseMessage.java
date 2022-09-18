@@ -30,4 +30,8 @@ public class ResponseMessage {
 
     public static final String DOC_UNLIKE_SUCCESS = "문서 좋아요 취소 성공";
     public static final String DOC_LIKE_NOT_EXIST = "문서 좋아요가 존재하지 않습니다.";
+
+    public static final String RECRUIT_POST_SUCCESS = "채용 공고 작성 성공";
+    public static final String RECRUIT_POST_FIND_SUCCESS = "채용 전체 공고 호출 성공";
+
 }
