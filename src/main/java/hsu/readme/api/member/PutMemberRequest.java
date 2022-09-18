@@ -12,4 +12,5 @@ public class PutMemberRequest {
     private String university;
     private String major;
     private String interests;
+    private String memberType;
 }

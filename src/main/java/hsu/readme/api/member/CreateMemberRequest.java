@@ -17,4 +17,6 @@ public class CreateMemberRequest {
     private String university;
     @NotNull
     private String major;
+    @NotEmpty
+    private String memberType;
 }

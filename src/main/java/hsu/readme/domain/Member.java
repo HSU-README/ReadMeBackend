@@ -29,6 +29,7 @@ public class Member{
     private String major;
 
     private String interests;
+    private String memberType;
 
     @OneToMany(mappedBy = "member")
     private List<Document> documents = new ArrayList<>();

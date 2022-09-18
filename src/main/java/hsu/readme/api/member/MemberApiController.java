@@ -38,6 +38,7 @@ public class MemberApiController {
         member.setMajor(request.getMajor());
         member.setProfileUrl("");
         member.setInterests("");
+        member.setMemberType(request.getMemberType());
 
         Long savedId = memberService.join(member);
         return Response.response("S200", CREATED_USER, new MemberResult(savedId));
@@ -57,7 +58,7 @@ public class MemberApiController {
     public Response memberInfoV1(@PathVariable Long id){
         Member member = memberService.findOne(id);
         return Response.response("S200", MEMBER_INFO_SUCCESS,
-                new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests()));
+                new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests(), member.getMemberType()));
     }
 
     //마이페이지 수정
@@ -66,7 +67,7 @@ public class MemberApiController {
         memberService.update(id, request.getName(), request.getProfileUrl(), request.getUniversity(), request.getMajor(), request.getInterests());
         Member member = memberService.findOne(id);
         return Response.response("S200", PUT_MEMBER_INFO_SUCCESS,
-                new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests()));
+                new GetMemberResult(member.getId(), member.getName(), member.getProfileUrl(), member.getUniversity(), member.getMajor(), member.getInterests(), member.getMemberType()));
     }
 
     //유저의 문서들 불러오기
