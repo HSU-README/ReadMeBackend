@@ -58,10 +58,10 @@ public class RecruitPostApiController {
     }
 
     //문서 삭제
-    @PostMapping("/api/v1/doc/delete/{docId}")
-    public Response deleteRecruitPost(@PathVariable Long recuritPostId) {
-        RecruitPost recruitPost = recruitPostService.findOne(recuritPostId);
+    @PostMapping("/api/v1/doc/delete/{recruitPostId}")
+    public Response deleteRecruitPost(@PathVariable Long recruitPostId) {
+        RecruitPost recruitPost = recruitPostService.findOne(recruitPostId);
         recruitPostService.deleteRecruitPost(recruitPost);
-        return Response.response("S200", DOC_DELETE_SUCCESS, recuritPostId);
+        return Response.response("S200", DOC_DELETE_SUCCESS, recruitPostId);
     }
 }
