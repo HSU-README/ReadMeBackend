@@ -41,4 +41,10 @@ public class RecruitPostService {
     public List<RecruitPost> findRecruitPostsByJob(String jobOpening) {
         return recruitPostRepository.findAllSortedByJob(jobOpening);
     }
+
+    @Transactional
+    public Long deleteRecruitPost(RecruitPost recruitPost) {
+        recruitPostRepository.deleteRecruitPost(recruitPost);
+        return recruitPost.getId();
+    }
 }

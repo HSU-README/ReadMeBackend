@@ -56,4 +56,12 @@ public class RecruitPostApiController {
         List<RecruitPost> recruitPosts = recruitPostService.findRecruitPostsByJob(jobOpening);
         return Response.response("S200", RECRUIT_POST_FIND_SUCCESS, recruitPosts);
     }
+
+    //문서 삭제
+    @PostMapping("/api/v1/doc/delete/{docId}")
+    public Response deleteRecruitPost(@PathVariable Long recuritPostId) {
+        RecruitPost recruitPost = recruitPostService.findOne(recuritPostId);
+        recruitPostService.deleteRecruitPost(recruitPost);
+        return Response.response("S200", DOC_DELETE_SUCCESS, recuritPostId);
+    }
 }

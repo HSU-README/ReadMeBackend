@@ -42,4 +42,6 @@ public class RecruitPostRepository {
                 .setParameter("job", job)
                 .getResultList();
     }
+
+    public void deleteRecruitPost(RecruitPost recruitPost) { em.remove(recruitPost); }
 }

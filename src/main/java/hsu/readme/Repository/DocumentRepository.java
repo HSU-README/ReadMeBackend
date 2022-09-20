@@ -20,7 +20,6 @@ import static hsu.readme.domain.QDocument.*;
 @Repository
 public class DocumentRepository {
 
-
     @PersistenceContext
     private EntityManager em;
     private JPAQueryFactory query;
