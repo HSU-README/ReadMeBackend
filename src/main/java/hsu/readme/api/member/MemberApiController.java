@@ -50,7 +50,7 @@ public class MemberApiController {
     public Response loginMemberV1(@RequestBody @Valid LoginMemberRequest request){
         Long savedId = memberService.login(request.getEmail(), request.getPassword());
         Member member = memberService.findOne(savedId);
-        return Response.response("S200", LOGIN_SUCCESS, new LoginMemberResult(savedId, member.getName(), member.getMajor()));
+        return Response.response("S200", LOGIN_SUCCESS, new LoginMemberResult(savedId, member.getName(), member.getMajor(), member.getMemberType()));
     }
 
     //마이페이지 조회
