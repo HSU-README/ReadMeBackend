@@ -25,10 +25,10 @@ public class RecruitPostApiController {
 
     private final RecruitPostService recruitPostService;
 
-    //채용공고 작성
+    // 채용공고 작성
     @PostMapping("/api/v1/recruit_post/new")
     @ResponseBody
-    public Response saveRecruitPostV1(@RequestBody @Valid CreateRecruitPostRequest request){
+    public Response saveRecruitPostV1(@RequestBody @Valid CreateRecruitPostRequest request) {
         RecruitPost recruitPost = new RecruitPost();
         recruitPost.setCompanyName(request.getCompanyName());
         recruitPost.setContent(request.getContent());
@@ -43,22 +43,22 @@ public class RecruitPostApiController {
         return Response.response("S200", RECRUIT_POST_SUCCESS, new MemberResult(savedId));
     }
 
-    //유저의 문서들 불러오기
+    // 유저의 문서들 불러오기
     @GetMapping("/api/v1/recruit_posts")
     public Response findRecruitPostsV1() {
         List<RecruitPost> recruitPosts = recruitPostService.findRecruitPosts();
         return Response.response("S200", RECRUIT_POST_FIND_SUCCESS, recruitPosts);
     }
 
-    //유저의 문서들 불러오기
+    // 유저의 문서들 불러오기
     @GetMapping("/api/v1/recruit_posts/{jobOpening}")
     public Response findRecruitPostsV1(@PathVariable String jobOpening) {
         List<RecruitPost> recruitPosts = recruitPostService.findRecruitPostsByJob(jobOpening);
         return Response.response("S200", RECRUIT_POST_FIND_SUCCESS, recruitPosts);
     }
 
-    //문서 삭제
-    @PostMapping("/api/v1/doc/delete/{recruitPostId}")
+    // 문서 삭제
+    @PostMapping("/api/v1/recruit_posts/delete/{recruitPostId}")
     public Response deleteRecruitPost(@PathVariable Long recruitPostId) {
         RecruitPost recruitPost = recruitPostService.findOne(recruitPostId);
         recruitPostService.deleteRecruitPost(recruitPost);
