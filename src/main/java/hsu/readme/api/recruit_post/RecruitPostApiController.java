@@ -43,21 +43,21 @@ public class RecruitPostApiController {
         return Response.response("S200", RECRUIT_POST_SUCCESS, new MemberResult(savedId));
     }
 
-    // 유저의 문서들 불러오기
+    // 채용공고 문서들 불러오기
     @GetMapping("/api/v1/recruit_posts")
     public Response findRecruitPostsV1() {
         List<RecruitPost> recruitPosts = recruitPostService.findRecruitPosts();
         return Response.response("S200", RECRUIT_POST_FIND_SUCCESS, recruitPosts);
     }
 
-    // 유저의 문서들 불러오기
+    // 특정 채용공고 문서들 불러오기
     @GetMapping("/api/v1/recruit_posts/{jobOpening}")
     public Response findRecruitPostsV1(@PathVariable String jobOpening) {
         List<RecruitPost> recruitPosts = recruitPostService.findRecruitPostsByJob(jobOpening);
         return Response.response("S200", RECRUIT_POST_FIND_SUCCESS, recruitPosts);
     }
 
-    // 문서 삭제
+    // 채용공고 삭제
     @PostMapping("/api/v1/recruit_posts/delete/{recruitPostId}")
     public Response deleteRecruitPost(@PathVariable Long recruitPostId) {
         RecruitPost recruitPost = recruitPostService.findOne(recruitPostId);
