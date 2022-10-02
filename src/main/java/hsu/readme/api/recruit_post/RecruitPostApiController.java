@@ -38,6 +38,7 @@ public class RecruitPostApiController {
         recruitPost.setJobOpening(request.getJobOpening());
         recruitPost.setSalary(request.getSalary());
         recruitPost.setSkillStack(request.getSkillStack());
+        recruitPost.setFirebaseUrl(request.getFirebaseUrl());
 
         Long savedId = recruitPostService.join(recruitPost);
         return Response.response("S200", RECRUIT_POST_SUCCESS, new MemberResult(savedId));

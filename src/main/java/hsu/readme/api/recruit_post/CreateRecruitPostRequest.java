@@ -22,5 +22,7 @@ public class CreateRecruitPostRequest {
     @NotEmpty
     private String applyLink;
     @NotEmpty
-    private String salary;
+    private Long salary;
+    @NotEmpty
+    private String firebaseUrl;
 }

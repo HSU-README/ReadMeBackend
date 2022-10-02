@@ -32,5 +32,7 @@ public class RecruitPost {
 
     private String applyLink;
 
-    private String salary;
+    private Long salary;
+
+    private String firebaseUrl;
 }

@@ -25,4 +25,6 @@ public class RecruitPostRequestDto {
     private String applyLink;
     @NotEmpty
     private Long salary;
+    @NotEmpty
+    private String firebaseUrl;
 }
