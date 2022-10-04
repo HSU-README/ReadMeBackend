@@ -15,6 +15,6 @@ import javax.persistence.Lob;
 public class Image extends Component {
 
     @Lob
-    @Column(length = 30000)
+    @Column(length = 4000)
     private String imgUrl;
 }

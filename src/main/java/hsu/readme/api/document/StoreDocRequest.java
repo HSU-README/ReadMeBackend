@@ -17,7 +17,7 @@ public class StoreDocRequest {
     private String title;
 
     @Lob
-    @Column(length = 30000)
+    @Column(length = 4000)
     private String docUrl;
 
     private String visibility;

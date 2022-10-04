@@ -22,7 +22,7 @@ public class Member {
     private String password;
 
     @Lob
-    @Column(length = 30000)
+    @Column(length = 4000)
     private String profileUrl;
 
     private String university;
