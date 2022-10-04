@@ -7,21 +7,22 @@ spring:
     username: root
     password: 1234
 
-#    local: h2
-#    url: jdbc:h2:tcp://localhost/~/readme
-#    username: jgeun
-#    password: 1234
-#    driver-class-name: org.h2.Driver
+  #    local: h2
+  #    url: jdbc:h2:tcp://localhost/~/readme
+  #    username: jgeun
+  #    password: 1234
+  #    driver-class-name: org.h2.Driver
 
-#    local: mysql
-#    url: jdbc:mysql://localhost:3306/HsuReadMe?serverTimezone=Asia/Seoul
-#    username: root
-#    password: 1234
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    local: mysql
+  #    url: jdbc:mysql://localhost:3306/HsuReadMe?serverTimezone=Asia/Seoul
+  #    username: root
+  #    password: 1234
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
+      # ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
