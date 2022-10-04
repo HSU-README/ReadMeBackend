@@ -8,13 +8,15 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 public class MemberValidation {
-    //SIGN UP
+    // SIGN UP
     public static void emptyCheckMemberUniversity(String university) {
-        if (university.length() == 0) throw new ApiException(ExceptionEnum.EMPTY_USER_UNIVERSITY_EXCEPTION);
+        if (university.length() == 0)
+            throw new ApiException(ExceptionEnum.EMPTY_USER_UNIVERSITY_EXCEPTION);
     }
 
     public static void emptyCheckMemberMajor(String major) {
-        if (major.length() == 0) throw new ApiException(ExceptionEnum.EMPTY_USER_MAJOR_EXCEPTION);
+        if (major.length() == 0)
+            throw new ApiException(ExceptionEnum.EMPTY_USER_MAJOR_EXCEPTION);
     }
 
     public static void validateDuplicateMemberByEmail(List<Member> findMembersByEmail) {

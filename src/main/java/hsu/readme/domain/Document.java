@@ -37,7 +37,7 @@ public class Document {
     private LocalDateTime documentDate;
 
     @Lob
-    @Column(length = 3000)
+    @Column(length = 30000)
     private String docUrl;
 
     private String docMajor;
@@ -51,7 +51,7 @@ public class Document {
     @Enumerated(EnumType.STRING)
     private DocumentStatus status;
 
-    //== 연관관계 메서드 == //
+    // == 연관관계 메서드 == //
     public void setMember(Member member, Long docId) {
         this.member = member;
         member.getDocuments().add(this);
@@ -62,7 +62,6 @@ public class Document {
         docComponent.setDocument(this);
     }
 
-
     public void addTag(Tag tag) {
         tags.add(tag);
         tag.setDocument(this);
@@ -72,22 +71,23 @@ public class Document {
         this.member.getDocuments().remove(this);
     }
 
-    //== 생성 메서드 ==//
-    public static Document createDocument(Member member, String title, String docUrl, String visibility, String major, List<Tag> tags,  List<DocComponent> docComponents) {
+    // == 생성 메서드 ==//
+    public static Document createDocument(Member member, String title, String docUrl, String visibility, String major,
+            List<Tag> tags, List<DocComponent> docComponents) {
         Document document = new Document();
         document.setMember(member);
         document.setTitle(title);
         document.setDocUrl(docUrl);
         document.setDocMajor(major);
 
-        for(Tag tag : tags) {
+        for (Tag tag : tags) {
             document.addTag(tag);
         }
         for (DocComponent docComp : docComponents) {
             document.addDocComponent(docComp);
         }
 
-        if(visibility.equals("public")) {
+        if (visibility.equals("public")) {
             document.setVisibility(DocumentVisibility.PUBLIC);
         } else {
             document.setVisibility(DocumentVisibility.PRIVATE);

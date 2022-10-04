@@ -12,8 +12,8 @@ import javax.persistence.Lob;
 @Getter
 @Setter
 @DiscriminatorValue("text")
-public class Text extends Component{
+public class Text extends Component {
     @Lob
-    @Column(length = 3000)
+    @Column(length = 30000)
     private String textContent;
 }

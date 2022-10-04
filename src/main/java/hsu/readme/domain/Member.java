@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Member{
+public class Member {
 
     @Id
     @GeneratedValue
@@ -22,7 +22,7 @@ public class Member{
     private String password;
 
     @Lob
-    @Column(length = 3000)
+    @Column(length = 30000)
     private String profileUrl;
 
     private String university;

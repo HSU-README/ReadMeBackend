@@ -12,9 +12,9 @@ import javax.persistence.Lob;
 @Getter
 @Setter
 @DiscriminatorValue("image")
-public class Image extends Component{
+public class Image extends Component {
 
     @Lob
-    @Column(length = 3000)
+    @Column(length = 30000)
     private String imgUrl;
 }

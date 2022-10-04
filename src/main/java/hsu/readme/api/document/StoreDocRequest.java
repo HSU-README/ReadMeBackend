@@ -17,7 +17,7 @@ public class StoreDocRequest {
     private String title;
 
     @Lob
-    @Column(length = 3000)
+    @Column(length = 30000)
     private String docUrl;
 
     private String visibility;
@@ -27,14 +27,16 @@ public class StoreDocRequest {
     @JsonProperty("components")
     private List<DocComponentDto> docComponentDtos;
 
-    public StoreDocRequest() {}
+    public StoreDocRequest() {
+    }
 
-    public StoreDocRequest(Long docId, Long memberId, String title, String docUrl, String visibility, String major, List<String> tags, List<DocComponentDto> docComponentDtos) {
+    public StoreDocRequest(Long docId, Long memberId, String title, String docUrl, String visibility, String major,
+            List<String> tags, List<DocComponentDto> docComponentDtos) {
         this.docId = docId;
         this.memberId = memberId;
         this.title = title;
         this.docUrl = docUrl;
-        System.out.println("docUrl"+ docUrl);
+        System.out.println("docUrl" + docUrl);
         this.visibility = visibility;
         this.major = major;
         this.tags = tags;
