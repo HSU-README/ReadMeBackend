@@ -19,7 +19,7 @@ public class RecruitPost {
     private Long id;
 
     private String companyName;
-
+    @Column(length = 4000)
     private String content;
 
     private String skillStack;
@@ -34,5 +34,6 @@ public class RecruitPost {
 
     private String salary;
 
+    @Column(length = 4000)
     private String firebaseUrl;
 }
